@@ -1,0 +1,356 @@
+<div class="session-header color-4">
+	<div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+	<header>
+		<h1>Step 2 - CSS 3</h1>
+		<p>Setting styles</p>
+		<div class="header-control">
+      <div id="primary-download" class="round-btn" onclick="showDownloadOptions(this)"> 
+        <img src="./img/download.svg" alt="download-svg">
+      </div>
+      <!-- <div class="round-btn sub-btn">
+        <a href="#" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-code-o"></i>
+        </a>
+        <p class="tooltip">Base Code</p>
+      </div> -->
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_1_HTML.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-zip-o"></i>
+        </a>
+        <p class="tooltip">Solved Tutorial</p>
+      </div>
+    </div>
+
+	</header>
+</div>
+
+<section>
+	<h3>Table of Contents</h3>
+	<div class="summary">
+		<ul>
+			<li> <a data-scroll="pre" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> CSS Quick Guide</a></li>
+			<li> <a data-scroll="beggining" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Beggining with CSS</a></li>
+			<li> <a data-scroll="creating" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Creating the Stylesheet</a></li>
+			<li>
+				<ul>
+					<li><a data-scroll="refering" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Refering the CSS on the Index Page</a></li>
+				</ul>
+			</li>
+			<li> <a data-scroll="positioning" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Positioning Elements on the Page</a></li>
+			<li>
+				<ul>
+					<li> <a data-scroll="general" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> General Settings</a></li>
+					<li><a data-scroll="header" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Header</a></li>
+					<li><a data-scroll="form" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Form</a></li>
+					<li><a data-scroll="footer" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Footer</a></li>
+				</ul>
+			</li>
+			<li> <a data-scroll="color" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Adding Color and Extra Styles to the Page</a></li>
+			<li>
+				<ul>
+					<li><a data-scroll="headerfooter" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Styling the Header and the Footer</a></li>
+					<li><a data-scroll="formround" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Putting the Form on a Bordered Box</a></li>
+					<li><a data-scroll="font" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Changing the Main Font</a></li>
+				</ul>
+			</li>
+			<li> <a data-scroll="complete" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Complete CSS Code</a></li>
+			<li> <a data-scroll="next" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Result & Next Step</a></li>
+		</ul>
+	</div>
+</section>
+<section>
+	<h2 id="pre">CSS Quick Guide</h2>
+	<p>It's highly recommended that you read <a href="#/article/2/css">this article</a> before continuing. It contains all the concepts that we'll use on our project (and it will be updated constantly). This article also contains Useful Links for you to learn and understand better CSS.</p>
+</section>
+<section>
+	<h2 id="beggining">Beggining with CSS</h2>
+	<p>In order to make our page more pretty, we'll use some CSS code. If you have no clue what CSS is, just check <a href="#/article/2/css">this quick guide</a>.</p>
+</section>
+<section>
+	<h2 id="creating">Creating the Stylesheet</h2>
+	<p>To create the styesheet, navigate to the left side on the NetBeans window, right click on <b>Web Pages</b> and navigate through: <b>New > Other</b> and under the <b>Web</b> category, look for <b>Cascading Style Sheet</b> on the right side of the window.</p>
+	<div class="img-box">
+		<img src="img/tutorial-img/css1.jpg" alt="">
+	</div>
+	<div class="img-box">
+		<img src="img/tutorial-img/css2.jpg" alt="">
+	</div>
+	<h3 id="refering">Refering the CSS on the Index Page</h3>
+	<p>In order for our CSS content to be read by the index file, we have to refer the <b>style.css</b> file on our <b>index.jsp</b>. To do this, add the following line to the <b>&lt;head&gt;</b> element on the <b>.jsp</b> file.</p>
+	<pre class="prettyprint">
+&lt;link rel="stylesheet" type="text/css" href="style.css"&gt;
+</pre>
+	<p>Now we're ready to go.</p>
+</section>
+<section>
+	<h2 id="positioning">Positioning Elements on the Page</h2>
+	<h3 id="general">General Settings</h3>
+	<p>Feel free to erase any content on the <b>CSS</b> file if you wish.</p>
+	<p>Let's start the styling by setting a minimum width to the page and getting rid of the margins:</p>
+	
+	<pre class="prettyprint lang-css">
+body {
+  min-width: 500px;
+  margin: 0;
+}
+</pre>
+  <p>Now, let's position the elements <b>&lt;header&gt;</b>, <b>&lt;section&gt;</b>, and <b>&lt;footer&gt;</b> on the middle of the page. Notice here that we want to change styles for three elements, and the style will be the same for all of them. Instead of refering each one of the elements alone on the CSS, we can set a <b>class</b> and, back on our <b>index.jsp</b> file, we can say that these elements have such a class. We'll call this class <b>container</b>.</p>
+  <p>So let's get back to our <b>index.jsp</b> page and add the following classes:</p>
+  
+  <pre class="prettyprint">
+&lt;body&gt;
+  &lt;header <b>class="container"</b>&gt;
+    ...
+  &lt;/header&gt;
+  &lt;section <b>class="container"</b>&gt;
+    ...
+  &lt;/section&gt;
+  &lt;footer <b>class="container"</b>&gt;
+    ...
+  &lt;/footer&gt;
+&lt;/body&gt;
+</pre>
+	<p>Now we can set the style for the <b>content</b> class by doing:</p>
+	
+	<pre class="prettyprint lang-css">
+.container {
+  width: 85%; /* If the width is 85%, we'll still have 15% of the page outside the container */
+  padding: 0 7.5%; /* 0 refers to top and bottom paddings and 7.5% to left and right paddings */
+  clear: both; /* Prevents that the float property "escapes" to other elements */
+}
+</pre>
+	<h3 id="header">The Header</h3>
+	<p>Now that our elements are correctly positioned on the page, let's position the elements inside the <b>&lt;header&gt;</b>.</p>
+	<p>We want the header to have only one line, the navigation menu to be on the right side and the title to be on the left side. Let's also change the title size the margin of it's boundering box. To do this, add the following to the CSS:</p>
+	
+	<pre class="prettyprint lang-css">
+header {
+  height: 50px; /* Size of the header */
+}
+header h1 a { /* Selecting the link element inside de h1 */
+  text-decoration: none; /* Removes the underline */
+}
+header h1 { /* Selecting the h1 element which is under the header*/
+  font-size: 22px;
+  margin: 0;
+  padding: 10px 14px; /* 10px to both bottom and top paddings and 14px to both left and right paddings */
+  float: left; /* Pushes all the h1 block to the left */
+}
+header nav {
+  float: right; /* Pushes all the nav block to the right */
+}
+</pre>
+  <p>Next up, let's redefine the way the <b>menu list</b> is shown by default. We want no "dots" on the side of the items and we also don't wan't any margins or paddings. The following code will do the trick:</p>
+  
+  <pre class="prettyprint lang-css">
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+</pre>
+  <div class="quote">
+  	<p>We have to be careful here. On our page we have only one <b>nav</b> tag. If we had more than one, the properties above would affect them too. We can avoid that by setting an <b>id</b> or a <b>class</b> to the desired element.</p>
+  </div>
+  <p>Now, let's edit the menu items. We want them to be on the same line and to look like real buttons (not just links). We can do this bu writing on our CSS:</p>
+  <pre class="prettyprint lang-css">
+nav ul li {
+  display: inline-block; /* All li elements on the nav will be displayed on the same horizontal line */
+  margin-top: 15px; /* Gives 15px of distance from the top of the page */
+}
+nav ul li a {
+  text-decoration: none; /* Removes the underline */
+  padding: 10px 14px; /* 10px to both bottom and top paddings and 14px to both left and right */
+                      /* paddings, giving the link a look of a button */
+}
+</pre>
+	<div class="quote">
+		<p>There's an insteresting thing going on here, which is also covered on our <a href="#/article/2/css">quick guide</a>. The <b>nav ul li</b> element here is floating to the right (once one of its parents also is) and that means that we are taking this element off the document flow. When we do this, we lose the <b>padding control</b> of the element and that's why we have to set some <b>top margin</b> to it.</p>
+	</div>
+  <h3 id="form">The Form</h3>
+  <p>On the middle of the page we have a <b>&lt;section&gt;</b> which has a <b>&lt;article&gt;</b> and inside this <b>article</b> we have our <b>&lt;form&gt;</b>, which we want to be centered. There is a simple way of doing this:</p>
+  <pre class="prettyprint lang-css">
+article {
+  width: 400px;
+  margin: 0px auto; /* Here, we're saying that this box will have no margin on top and on the bottom*/
+                    /* and we're also setting the sides' margin to be automatically calculated equally*/
+  margin-top: 50px; /*Giving some space on the top of the article*/
+  padding: 0px 20px; /* Setting 0px of padding on the top and on the bottom and padding of 20px on the sides */
+}
+form {
+  text-align: center;
+}
+</pre>
+ <h3 id="footer">The Footer</h3>
+ <p>The idea here is to make the footer fixed on the bottom of the page. This concept is called <b>sticky footer</b> and we can achieve this by giving this element a <b>position</b> property (for a more complete understanding on the CSS Advanced Positioning techniques, check out the <a href="#/article/2/css">quick guide</a>.)</p>
+ <pre class="prettyprint lang-css">
+footer{
+  position: absolute; /* The element has an absolute position inside its container */
+  bottom: 0px; /* Distance from the bottom */
+  text-align: center;
+  width: 100%;
+}
+</pre>
+	<p>We also have to add a property to the <b>&lt;body&gt;</b> specifying that his <b>minimum height</b> will be 100% of the page's height. We also have to set the height of the <b>&lt;html&gt;</b> element to 100%. This means that even thought the <b>&lt;html&gt;</b>'s height is limited by being 100%, the <b>&lt;body&gt;</b>'s height will strech as it gets larger contents.</p>
+	<p>The following items should be on your CSS:</p>
+  <pre class="prettyprint lang-css">
+html {
+  height: 100%;
+}
+body {
+  min-width: 500px;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  position: relative;
+}
+</pre>
+	<p>Awesome! Now all the content is correctly positioned on the page. Let's move on and give it some color.</p>
+</section>
+<section>
+	<h2 id="color">Adding Color and Extra Styles to the Page</h2>
+	<h3 id="headerfooter">Styling the Header and the Footer</h3>
+	<p>The idea is to have the <b>&lt;header&gt;</b> and the <b>&lt;footer&gt;</b> on the same color. Also, we want the top right links to look like buttons, so let's set some border on them. Let's also set a <b>salmon</b> color on the background and set all the foreground text to white. Here's the code:</p>
+	<pre class="prettyprint lang-css">
+header, footer {
+  background-color: salmon;
+  color: white;
+}
+header a, /* General link tag */
+header a:link, /* Links that have not been visited */
+header a:visited /* Links that have already been visited */,
+header a:active { /* Behaviour triggered when the link is clicked */
+  color: white;
+}
+nav ul li a {
+  border: 1px solid white;
+}
+</pre>
+  <h3 id="formround">Putting the Form on a Bordered Box</h3>
+	<p>Now, let's put our <b>&lt;form&gt;</b> inside a box where the background will remain the same, but we'll add some rounded border to it. Just do the following:s</p>
+	<pre class="prettyprint lang-css">
+article {
+  border: solid 1px #999;
+  -webkit-border-radius: 12px; 
+     -moz-border-radius: 12px; 
+          border-radius: 12px;
+}
+</pre>
+	<div class="quote">
+		<p>At the piece of code above, we are using some <b>Vendor Prefixes</b>, such as <b>-webkit-</b> and <b>-moz-</b>. This is needed for browser versions that don't have a native implementation of the <b>border-radius</b> property. The <b>-moz-</b> prefix is for Mozilla older browsers and the <b>-webkit-</b> is used for Apple Safari, webkit based Google Chrome and some others. Browsers that have the native property implemented will simply understand the last line (with no prefix at all).</p>
+	</div>
+	<h3 id="font">Changing the Main Font</h3>
+	<p>The standard font most of the browsers uses is "Times New Roman". However, we can set up a more rounded (or sans-serif) font, which will make our application to look nicer. For this example, we'll change it to <b>Tahoma</b>.</p>
+	<p>To do that, we will use the <b>font-family</b> CSS property inside the <b>&lt;body&gt;</b>:</p>
+	<pre class="prettyprint lang-css">
+body {
+  /* ... */
+  font-family: "Tahoma", sans-serif;
+}		
+</pre>
+</section>
+<section>
+	<h2 id="complete">The Complete CSS Code</h2>
+	<p>At the end, your CSS code should look like the following:</p>
+<pre class="prettyprint lang-css">
+/* Positioning Elements */
+
+html {
+  height: 100%;
+}
+body {
+  min-width: 500px;
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  position: relative;
+  font-family: "Tahoma", Sans Serif;
+}
+.container {
+  width: 85%; /* If the width is 85%, we'll still have 15% of the page outside the container */
+  padding: 0 7.5%; /* 0 refers to top and bottom paddings and 7.5% to left and right paddings */
+  clear: both; /* Prevents that the float property "escapes" to other elements */
+}
+header {
+  height: 50px; /* Size of the header */
+}
+header h1 a { /* Selecting the link element inside de h1 */
+  text-decoration: none; /* Removes the underline */
+}
+header h1 { /* Selecting the h1 element which is under the header*/
+  font-size: 22px;
+  margin: 0;
+  padding: 10px 14px; /* 10px to both bottom and top paddings and 14px to both left and right paddings */
+  float: left; /* Pushes all the h1 block to the left */
+}
+header nav {
+  float: right; /* Pushes all the nav block to the right */
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+nav ul li {
+  display: inline-block; /* All li elements on the nav will be displayed on the same horizontal line */
+  margin-top: 15px; /* Gives 15px of distance from the top of the page */
+}
+nav ul li a {
+  text-decoration: none; /* Removes the underline */
+  padding: 10px 14px; /* 10px to both bottom and top paddings and 14px to both left and right */
+                      /* paddings, giving the link a look of a button */
+}
+article {
+  width: 400px;
+  margin: 0px auto; /* Here, we're saying that this box will have no margin on top and on the bottom*/
+                    /* and we're also setting the sides' margin to be automatically calculated equally*/
+  margin-top: 50px; /*Giving some space on the top of the article*/
+  padding: 0px 20px; /* Setting 0px of padding on the top and on the bottom and padding of */
+                     /* 20px on the left and on right */
+}
+form {
+  text-align: center;
+}
+form {
+  text-align: center;
+}
+footer {
+  position: absolute; /* The element has an absolute position inside its container */
+  bottom: 0px; /* Distance from the bottom */
+  text-align: center;
+  width: 100%; 
+}
+
+/* Adding Color and Extra Styles */
+
+header, footer {
+  background-color: salmon;
+  color: white;
+}
+header a, /* General link tag */
+header a:link, /* Links that have not been visited */
+header a:visited /* Links that have already been visited */,
+header a:active { /* Behaviour triggered when the link is clicked */
+  color: white;
+}
+nav ul li a {
+  border: 1px solid white;
+}
+article {
+  border: solid 1px #999;
+  -webkit-border-radius: 12px; 
+     -moz-border-radius: 12px; 
+          border-radius: 12px;
+}
+</pre>
+</section>
+
+<section>
+	<h2 id="next">Result & Next Step</h2>
+	<p>When you run the project, it should look like this:</p>
+	<div class="img-box">
+		<img src="img/tutorial-img/css3.jpg" alt="">
+	</div>
+	<p>There's still a problem here: our form is not validating the data the user types in. On our next tutorial, we'll add this behaviours by setting some JavaScript code.</p>
+	<a href="#/tutorial/3" class="jump-link">Adding JavaScript for Form Validation <i class="fa fa-arrow-right"></i></a>
+</section>

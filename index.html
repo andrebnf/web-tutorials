@@ -1,0 +1,119 @@
+<!doctype html>
+<html ng-app="webTuts">
+<head>
+	<title>WEB Tutorials</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" type="image/png" href="./img/favicon.png"/>
+	<script src="./external/angular.min.js"></script>
+	<script src="./external/angular-route.min.js"></script>
+	<script src="./external/prettify.js"></script>
+	<script src="./external/lang-css.js"></script>
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<!-- <link rel="shortcut icon" type="image/png" href="./img/favicon.png"/> -->
+	
+	
+	<script src="./external/jquery.js"></script>
+	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script src="./js/main.js"></script>
+	
+	<link href="./css/main.css" rel='stylesheet' type='text/css'>
+	<link href="./external/prettify-theme.css" rel="stylesheet">
+	<link href="./external/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+	<style>
+	    .prettyprint ol.linenums > li { list-style-type: decimal; }
+	</style> 
+
+	<script>
+      var webTutsApp = angular.module('webTuts', ['ngRoute']);
+
+      webTutsApp.config(function($routeProvider) {
+        $routeProvider.
+        	when('/article/:art_number/:some_name', {
+          	templateUrl: function(params) {
+		        return './templates/article' + params.art_number + '.html';
+		    },
+		    controller:'routeHighlightMenu' 
+          }).
+          when('/tutorial/:tut_number', {
+          	templateUrl: function(params) {
+		        return './templates/tutorial' + params.tut_number + '.html';
+		    },
+		    controller:'routeHighlightMenu' 
+          }).
+          when('/:path_name', {
+          	templateUrl: function(params) {
+		        return './templates/' + params.path_name + '.html';
+		    },
+		    controller:'routeHighlightMenu' 
+          }).
+          otherwise({
+            redirectTo: '/',
+            templateUrl: './templates/presentation.html',
+		    controller:'routeHighlightMenu'
+          });
+      });
+      webTutsApp.controller('routeHighlightMenu', function ($routeParams){
+        highlightOnLocation();
+        prettyPrint();
+      });
+
+    </script>
+
+</head>
+<body onscroll="fixToTopBtn()">
+	<div id="main-wrapper">
+		<div class="responsive-modal">
+			<div id="close-menu"><i class="fa fa-close"></i></div>
+		</div>
+		<aside>
+			<div class="menu-wrap">
+				<div class="fixed-menu">
+					<h1><a href="./"><span class="web"> WEB </span> DEVELOPMENT</a></h1>
+					<p>Profa. Dra. Luciana Zaina</p>
+				</div>
+				<div class="scrollable-menu">
+					<ul>
+						<li class="root-item" data-redirect="presentation"><p><i class="fa fa-eye"></i>Presentation</p></li>
+						<li class="root-item has-sub-menu"><p><i class="fa fa-code"></i>Articles</p></li>
+						<li class="hidden-menu">
+							<div class="sub-menu-container article-hidden">
+								<a class="enabled" href="./#/article/1/html">HTML Quick Guide</a>
+								<a class="enabled" href="./#/article/2/css">CSS Quick Guide</a>
+								<a class="enabled" href="./#/article/3/css-positioning">Advanced Positioning with CSS</a>
+								<a class="disabled" href="./#/article/3/web-morphing">JavaScript Quick Guide<span>soon</span></a>
+								<a class="disabled" href="./#/article/3/web-morphing">jQuery<span>soon</span></a>
+								<a class="disabled" href="./#/article/3/web-morphing">AngularJS<span>soon</span></a>
+								<a class="disabled" href="./#/article/3/web-morphing">Node.js<span>soon</span></a>
+							</div>
+						</li>
+						<li class="root-item has-sub-menu"><p><i class="fa fa-car"></i>Ride App Tutorials</p></li>
+						<li class="hidden-menu">
+							<div class="sub-menu-container tutorial-hidden">
+								<a class="enabled" href="./#/tutorial/1">1 - HTML</a>
+								<a class="enabled" href="./#/tutorial/2">2 - CSS</a>
+								<a class="enabled" href="./#/tutorial/3">3 - jQuery<span>soon</span></a>
+								<a class="enabled" href="./#/tutorial/4">4 - Servlet<span>soon</span></a>
+								<a class="disabled" href="./#/tutorial/5">5 - Ajax<span>soon</span></a>
+								<a class="disabled" href="./#/tutorial/6">6 - JSP and MVC<span>soon</span></a>
+								<a class="disabled" href="./#/tutorial/7">7 - Database Connection<span>soon</span></a>
+								<a class="disabled" href="./#/tutorial/8">8 - Queries (Database)<span>soon</span></a>
+								<a class="disabled" href="./#/tutorial/9">9 - Session<span>soon</span></a>
+							</div>
+						</li>
+						<li class="root-item" data-redirect="monitor"><p><i class="fa fa-users"></i>Monitor Info<span class="notification">updated</span></p></li>
+						<li class="root-item" data-redirect="about"><p><i class="fa fa-newspaper-o"></i>About</p></li>
+					</ul>
+				</div>
+			</div>
+		</aside>
+		<div ng-view class="content">
+			
+		</div>
+	</div>
+	<div id="top-scroll" onclick="$('html, body').animate({ scrollTop: 0 }, 'medium');"><i class="fa fa-chevron-up"></i></div>
+</body>
+</html>

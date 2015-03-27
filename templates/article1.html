@@ -1,0 +1,241 @@
+<div class="session-header color-4">
+  <div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+  <header>
+    <h1>HTML Quick Guide</h1>
+    <p>by @andrebnf</p>
+    <div class="header-control">
+      
+    </div>
+  </header>
+</div>
+<section>
+  <h3>Table of Contents</h3>
+  <div class="summary">
+    <ul>
+      <li> <a data-scroll="intro" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Intro</a></li>
+      <li> <a data-scroll="semantics" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> HTML Semantics</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="dom" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Document Object Model (DOM)</a></li>
+          <li><a data-scroll="seo" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Importance of Semantic HTML in SEO (Search Engine Optimization)</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="version" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> HTML Version</a></li>
+      <li>
+        <ul>
+          <li> <a data-scroll="changes" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Changes</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="starting" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Starting to Code</a></li>
+      <li>
+        <ul>
+          <li> <a data-scroll="editors" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Recommended Editors</a></li>
+          <li> <a data-scroll="running" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Running your Code</a></li>
+          <li> <a data-scroll="examples" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Examples</a></li>
+        </ul>
+      </li>
+      <li><a data-scroll="attr" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> HTML "id" and "class" Attributes</a></li>
+      <li><a data-scroll="styling" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Adding Styles to your HTML</a></li>
+      <li><a data-scroll="usefullinks" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Useful Links</a></li>
+    </ul>
+  </div>
+</section>
+<section>
+  <h2 id="intro">Intro</h2>
+  <div class="quote">
+    <p>HTML is one the languages we use to develop websites. The acronym HTML stands for Hypertext Markup Language.</p>
+    <p>HTML is the base language for the web. It was created in order to be easily comprehended by human beings and also for machines, as for example Google or other systems that search the web capturing information.</p>
+  </div>
+  <p class="source">Source: <a href="http://tableless.com.br/o-que-html-basico/" target="_blank">Tableless</a></p>
+  <p>The page you're looking at right now is HTML (and its style, which we'll come along soon) rendered by your browser.</p>
+  <p>The HTML syntax is easy to understand. To start with, everything is a tag. In the example below, we can see a simple Hello World HTML code, which implements the essentials for a HTML code to run.</p>
+  
+  <pre class="prettyprint">
+&lt;!-- This is a comment --&gt;
+&lt;!doctype html&gt; &lt;!-- This line tells the browser we are using HTML5 validation --&gt;
+&lt;html&gt;
+&lt;head&gt; 
+  &lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello Web&lt;/h1&gt;
+&lt;/body&gt; &lt;!-- A good HTML ninja always close his tags! --&gt;
+&lt;/html&gt;
+</pre>
+
+  <div class="quote">
+    <p><b>Obs:</b> It's essential for you to understand that the browser will run and display a HTML file that contains one or more errors. Therefore, the programmer has the responsability to write a clean and flawless code, following the HTML specification from W3C.</p>
+  </div>
+
+</section>
+
+<section>
+  <h2 id="semantics">HTML Semantics</h2>
+  <p>The HTML language contains <b>semantic</b> and <b>non-semantic</b> tags. Semantic means "meaning". In HTML, meaning is important both for the developer and the browser.</p>
+  <p>At earlier versions of HTML, you would define a header by writing:</p>
+  <pre class="prettyprint">&lt;div class="header"&gt;
+  &lt;h1&gt;Some Title&lt;/h1&gt;
+&lt;/div&gt;</pre>
+  <p>For the browser, this means that there is a header text inside a div, but it can't exactly define wheter this header text actually is on the page.</p>
+  <p>A more meaningful way to do it with HTML 5 is:</p>
+  <pre class="prettyprint">&lt;header&gt;
+  &lt;h1&gt;Some Title&lt;/h1&gt;
+&lt;/header&gt;</pre>
+  <p>Wow! It's quite a change! So now, the browser knows you have a title inside a header and it even knows you have a header.</p>
+  <p>Below, you can check some example of semantics in HTML:</p>
+  <pre class="prettyprint">&lt;!-- Non-semantic tags (tells nothing about its content): --&gt;
+&lt;div&gt; and &lt;span&gt;
+&lt;!-- Semantic tags (clearly defines its content): --&gt;
+&lt;form&gt;, &lt;table&gt;, and &lt;img&gt;
+&lt;!-- Some of the new semantic tags in HTML5: --&gt;
+&lt;article&gt;, &lt;aside&gt;, &lt;header&gt;, &lt;nav&gt;, and &lt;section&gt;
+</pre>
+  <p>To check all the new semantic tags added on HTML5, check <a href="http://www.w3schools.com/html/html5_semantic_elements.asp" target="_blank">this W3C article</a>.</p>
+  
+  <h3 id="dom">The Document Object Model (DOM)</h3>
+  <p>This is the HTML structure itself. All the HTML can be represented in a tree, and that's what the Object model is. That means that one element can have children, grandchildren and so on.</p>
+  <p>When your browser interprets your HTML code, it builds up a tree, having the element and it's children. Once we have this tree, it's easy to refer a certain object in the document. Say we have a <b>&lt;header&gt;</b>; this element is on the DOM tree and the browser knows exactly where it is (and obviously its children too).</p>
+  <p>You'll realize how important this concept is when we get to stylesheets. For now, let's focus on HTML.</p>
+  
+  <h3 id="seo">The Importance of Semantic HTML in SEO (Search Engine Optimization)</h3>
+  <p>If you're programming for the web, you will want Google or any other Search Engine to find your page. It's easier to find things which actually have a meaning and you can do that by writing clean and Semantic HTML code. So, if you're not sure whether some piece of code is wrong or not, check it first.</p>
+</section>
+
+<section>
+  <h2 id="version">HTML Version</h2>
+  <p>Currently, the standard HTML version on the web is the fifth revision of the language (which was completed on October 2014).</p>
+  <p>The previous version of HTML, the forth one, was released in 1997. However, it was constantly updated as the developer community needed (this is happening with HTML 5 too and it's a natural thing).</p>
+
+  <h3 id="changes">The Changes</h3>
+
+  <p>HTML 5 introduces several new tags, as it removes several others.</p>
+  <p>In order to follow W3C's HTML specification properly, we have to add a line in our HTML file saying to browser which version are we using. Since HTML 5 is now the default, we declare we are using it by simply writing at the top of our file:</p>
+  <pre class="prettyprint">&lt;!doctype html&gt;</pre>
+  <p>This doesn't mean you can't specify and use another HTML revision. Checkout <a href="http://www.w3schools.com/tags/tag_DOCTYPE.asp" target="_blank">this link</a> to go back to the stone age.</p>
+  <p>The most inportant tags added to this version are the semantic tags:</p>
+  <pre class="prettyprint">&lt;header&gt;, &lt;footer&gt;, &lt;article&gt;, and &lt;section&gt;</pre>
+  <p>This <a href="http://www.w3schools.com/html/html5_intro.asp" target="_blank">W3C article</a> explains more about the new HTML 5 tags and check out <a href="#">this article</a> if you're wondering how is the web changing right now.(development wise) </p>
+</section>
+
+<section>
+  <h2 id="starting">Starting to Code</h2>
+  <p>It's easy to begin with HTML. All you need is a text editor and a browser.</p>
+  
+  <h3>Recommended Editors</h3>
+  <p>If you still don't have any, I would recommend the following:</p>
+  <p>
+    <a href="http://www.sublimetext.com/2" target="_blank">Sublime Text 2</a> or
+    <a href="http://notepad-plus-plus.org/" target="_blank">Notepad++</a>
+  </p>
+  
+  <h3 id="running">Running your Code</h3>
+  <p>Once you've written and saved your code (with a .html extention), you have to open it with your browser and you're good test! That's your page.</p>
+  
+  <h3 id="examples">Examples</h3>
+  <p>Here are some examples for you to understand better HTML.</p>
+
+  <h4>1 - Simple Paragraph</h4>
+    <pre class="prettyprint">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Simple Paragraph&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;My Simple Paragraph&lt;/h1&gt;
+  &lt;p&gt;Some cool text&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+  <p>Which becomes:</p>
+  <div class="example">
+    <h1>My Simple Paragraph</h1>
+    <p>
+      Some cool text
+    </p>
+  </div>
+
+  <h4>2 - Shopping List</h4>
+    <pre class="prettyprint">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Shopping List&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;My Shopping List&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Cereal&lt;/li&gt;
+    &lt;li&gt;Beer&lt;/li&gt;
+    &lt;li&gt;Doritos&lt;/li&gt;
+    &lt;li&gt;Milk&lt;/li&gt;
+    &lt;li&gt;Tooth paste&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+  <p>Which becomes:</p>
+  <div class="example">
+    <h1>My Shopping List</h1>
+    <ul>
+      <li>Cereal</li>
+      <li>Beer</li>
+      <li>Doritos</li>
+      <li>Milk</li>
+      <li>Tooth paste</li>
+    </ul>
+  </div>
+
+  <h4>3 - Simple Form</h4>
+  <pre class="prettyprint">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Simple Form&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;My Simple Form&lt;/h1&gt;
+  &lt;form&gt;
+    &lt;label&gt;First Name:&lt;/label&gt;
+    &lt;input type="text"/&gt; &lt;!-- This is a self closing tag (the use of / is optional) --&gt; 
+    &lt;br/&gt;&lt;br/&gt; &lt;!-- This line inserts two line breaks to your content --&gt; 
+    &lt;label&gt;Last Name:&lt;/label&gt;
+    &lt;input type="text"/&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+  <p>Which becomes:</p>
+  <div class="example">
+    <h1>My Simple Form</h1>
+    <form>
+      <label>First Name:</label>
+      <input type="text"/>
+      <br/><br/>
+      <label>Last Name:</label>
+      <input type="text"/>
+    </form>
+  </div>
+</section>
+
+<section>
+  <h2 id="attr">HTML "id" and "class" Attributes</h2>
+  <p>The most common attributes we'll be using on HTML programming are the <b>id</b> and the <b>class</b> attributes.</p>
+	<p>There are several situations where you'll need these attributs. For now, keep in mind that when you set the class and/or the id for an element, the DOM will now it, and you can later on find your element by the class or the id you've chosen.</p>
+  <p>The <b>id</b> attribute is used to a <b>single element</b> on the DOM and the programmer is not allowed to make multiple repetitions of the <b>id</b>. If you do this, no error will be displayed, but it's semantically wrong.</p>
+  <p>The <b>class</b> attribute, however, can be used several times throughout the HTML. It's useful for making elements to be grouped and inherit the same features.</p>
+  <p>You will understand better the importance of these attributes when we start with CSS and JavaScript.</p>
+  <!-- <a class="jump-link" href="#">Next Article: Cascading Style Sheets (CSS) <i class="fa fa-arrow-right"></i></a> -->
+</section>
+
+<section>
+  <h2 id="styling">Adding Styles to your HTML</h2>
+  <p>HTML is a markup language for structuring your page, but it's impossible to create a nice-looking page using only HTML. That's where the CSS comes in.</p>
+
+  <!-- <a class="jump-link" href="#/article/2/css">Next Article: Cascading Style Sheets (CSS) <i class="fa fa-arrow-right"></i></a> -->
+</section>
+
+<section>
+  <h2 id="usefullinks">Useful Links</h2>
+  <ul class="links">
+    <li><a href="http://www.w3schools.com/html/" target="_blank">W3C HTML Tutorial</a> - One of the best places to learn HTML.</li>
+    <li><a href="http://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic_document/" target="_blank">W3C's HTML Editor</a> - Code and see the results on the same page.</li>
+    <li><a href="http://tableless.com.br/" target="_blank">Tableless (Portuguese)</a> - Useful articles regarding front-end development.</li>
+    <li><a href="http://tableless.com.br/o-que-html-basico/" target="_blank">Tableless - Basic HTML (Portuguese)</a> - HTML basics</li>
+  </ul>
+</section>

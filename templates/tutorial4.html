@@ -1,0 +1,228 @@
+<div class="session-header color-4">
+	<div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+	<header>
+		<h1>Step 4 - Servlet</h1>
+		<p>Back-end programming</p>
+		<!-- <div class="header-control">
+      <div id="primary-download" class="round-btn" onclick="showDownloadOptions(this)"> 
+        <img src="./img/download.svg" alt="download-svg">
+      </div>
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_4_servlet_BASE.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-code-o"></i>
+        </a>
+        <p class="tooltip">Base Code</p>
+      </div>
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_4_servlet_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-zip-o"></i>
+        </a>
+        <p class="tooltip">Solved Tutorial</p>
+      </div>
+    </div> -->
+
+	</header>
+</div>
+
+<section>
+	<h3>Table of Contents</h3>
+	<div class="summary">
+		<ul>
+      <li> <a data-scroll="intro" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Java Servlet Intro</a></li>
+      <li> <a data-scroll="first" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Java First Steps</a></li>
+      <li> <a data-scroll="creating" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Creating the Servlet</a></li>
+			<li> <a data-scroll="programming" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Programming the Servlet</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="params" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Getting the Params on the Server Side</a></li>
+          <li><a data-scroll="validating" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Granting User Access</a></li>
+          <li><a data-scroll="response" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Sending the Response to the Client</a></li>
+          <li><a data-scroll="writing" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Enabling the Response Writing</a></li>
+          <li><a data-scroll="completeservlet" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Complete doGet Code</a></li>
+          <li><a data-scroll="important" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Important Note</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="result" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Result and Next Step</a></li>
+		</ul>
+	</div>
+</section>
+
+<section>
+  <h2 id="intro">Java Servlet Intro</h2>
+  <p>For this application, we will use <a href="http://en.wikipedia.org/wiki/Java_servlet">Java Servlets</a> to manage requests and responses from the server side of our application.</p>
+</section>
+
+<section>
+  <h2 id="first">First Steps</h2>
+  <p>For this tutorial, we will work on the <b>login</b> of our website page, which was placed on the <b>index.jsp</b> page. The base code here is the solved code from the previous step.</p>
+  <p>In order to get our code ready to be processed on the server site, we have to change a few things on our <b>login</b> form. Let's add a <b>method</b> and a <b>action</b> attributes on the <b>&lt;form&gt;</b> element. In addition, we can't forget give names to our input fields, so the server can actually understand what we are trying to request. Your full form should look like:</p>
+  <pre class="prettyprint">
+&lt;form method="get" action="Login"&gt;
+  &lt;p&gt;&lt;label for="login"&gt;Username:&lt;/label&gt;&lt;input type="text" id="login" name="login"&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;label for="pass"&gt;Password:&lt;/label&gt;&lt;input type="password" id="pass" name="pass"&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;input type="submit" value="Log me in"&gt;&lt;/p&gt;
+&lt;/form&gt;
+</pre>
+  <p>The attribute method here refers to what HTTP method we are using to pass request through. The action attribute is telling the server what controller, or where the request is beign processed.</p>
+</section>
+
+<section>
+  <h2 id="creating">Creating the Servlet</h2>
+  <p>To create the servlet, right click the <b>RideShare</b> project on the top left navigator, select <b>New > Servlet...</b>. On the <b>New Servlet</b> window, change the Class Name to <b>Login</b>. Let's also group it under a <b>controllers</b> package, like the image below:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/servlet1.jpg" alt="">
+  </div>
+  <p>On the next window, check the box which says: <b>Add information to deployment descriptor (web.xml). After that, click on next.</b></p>
+  <div class="img-box">
+    <img src="img/tutorial-img/servlet2.jpg" alt="">
+  </div>
+  <p>NetBeans will, then, create a package named <b>controllers</b> inside the <b>Source Packages</b> group:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/servlet3.jpg" alt="">
+  </div>
+</section>
+
+<section>
+  <h2 id="programming">Programming the Servlet</h2>
+  <p>The form on our login page specifies that the HTTP method will handle the request with the GET method. The <b>Login.java</b> file created by NetBeans has a method <b>doGet</b>, which handles the request of our form when it's submitted. We will change a few things on this method.</p>
+  <pre class="prettyprint">
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
+  processRequest(request, response);    
+}
+</pre>
+  <p>This method has a call to the <b>processRequest</b> method. This call only gets the request and gives a default response back to the page. It doesn't do anything special, so let's <b>delete</b> it.</p>
+
+  <h3 id="params">Getting the Params on the Server Side</h3>
+  <p>Let's add two lines inside our <b>doGet</b> method on the <b>Login</b> servlet:</p>
+  <pre class="prettyprint">
+String username = request.getParameter("login");
+String password = request.getParameter("pass");
+</pre>
+  <p>These two lines are getting the values of the username and the password fields, respectively, from the client. The name surrounded by parenthesis at the end of each lines has to match the name we gave to each field on the HTML.</p>
+
+  <h3 id="validating">Granting User Access</h3>
+  <p>For this tutorial, let's consider that the access will be granted for the user if the <b>username</b> and the <b>password</b> values are identically the same and none of them are empty. This condition is represented by the following code:</p>
+  <pre class="prettyprint">
+if(username.equals(password) &amp;&amp; !username.isEmpty()) {...}    
+</pre>
+
+  <h3 id="response">Sending the Response to the Client</h3>
+  <p>After checking the condition for allowing the user to log in, we will get a response back to the client. This response will be a web page constructed on the server side (on this servlet).</p>
+  <p>In order to accomplish that, let's create a function that returns a string. This string contains the HTML of a webpage, which shows either an error message or the username logged in:</p>
+  <pre class="prettyprint">
+private String buildPage(String user) {
+  String page;
+  if (user.isEmpty()) {
+    page = "&lt;!doctype html&gt;"
+            + "&lt;html&gt;"
+            + "&lt;head&gt;"
+            + "&lt;meta charset=\"UTF-8\"&gt;"
+            + "&lt;title&gt;Ride Share&lt;/title&gt;"
+            + "&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"&gt;"
+            + "&lt;/head&gt;"
+            + "&lt;body&gt;"
+            + "&lt;header&gt;"
+            + "&lt;h1&gt;&lt;a href=\"index.jsp\"&gt;Ride Share&lt;/a&gt;&lt;/h1&gt;"
+            + "&lt;nav&gt;"
+            + "&lt;ul&gt;"
+            + "&lt;li&gt;&lt;a href=\"index.jsp\"&gt;Home&lt;/a&gt;&lt;/li&gt;"
+            + "&lt;li&gt;&lt;a href=\"./signup.jsp\"&gt;Sign up&lt;/a&gt;&lt;/li&gt;"
+            + "&lt;/ul&gt;"
+            + "&lt;/nav&gt;"
+            + "&lt;/header&gt;"
+            + "&lt;section&gt;"
+            + "&lt;article&gt;"
+            + "&lt;h1&gt;Incorrect Username or Password&lt;/h1&gt;"
+            + "&lt;/article&gt;"
+            + "&lt;/section&gt;"
+            + "&lt;footer&gt;"
+            + "&lt;p&gt;Web Development - UFSCar Sorocaba - 2015&lt;/p&gt;"
+            + "&lt;/footer&gt;"
+            + "&lt;/body&gt;"
+            + "&lt;/html&gt;";
+  } else {
+    page = "&lt;!doctype html&gt;"
+            + "&lt;html&gt;"
+            + "&lt;head&gt;"
+            + "&lt;meta charset=\"UTF-8\"&gt;"
+            + "&lt;title&gt;Ride Share&lt;/title&gt;"
+            + "&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"&gt;"
+            + "&lt;/head&gt;"
+            + "&lt;body&gt;"
+            + "&lt;header&gt;"
+            + "&lt;h1&gt;&lt;a href=\"index.jsp\"&gt;Ride Share&lt;/a&gt;&lt;/h1&gt;"
+            + "&lt;nav&gt;"
+            + "&lt;ul&gt;"
+            + "&lt;li&gt;&lt;a href=\"index.jsp\"&gt;Home&lt;/a&gt;&lt;/li&gt;"
+            + "&lt;li&gt;&lt;a href=\"./signup.jsp\"&gt;Sign up&lt;/a&gt;&lt;/li&gt;"
+            + "&lt;/ul&gt;"
+            + "&lt;/nav&gt;"
+            + "&lt;/header&gt;"
+            + "&lt;section&gt;"
+            + "&lt;article&gt;"
+            + "&lt;h1&gt;Welcome "+ user +"!&lt;/h1&gt;"
+            + "&lt;/article&gt;"
+            + "&lt;/section&gt;"
+            + "&lt;footer&gt;"
+            + "&lt;p&gt;Web Development - UFSCar Sorocaba - 2015&lt;/p&gt;"
+            + "&lt;/footer&gt;"
+            + "&lt;/body&gt;"
+            + "&lt;/html&gt;";
+  }
+
+  return page;
+}   
+</pre>
+
+  <h3 id="writing">Enabling the Response Writing</h3>
+  <p>Inside the <b>doGet</b> method, we have to call the <b>getWriter()</b> param which belongs to the response variable in order to give the servlet the ability to send a direct text to be interpreted by the client. The following code will do this:</p>
+  <pre class="prettyprint">
+PrintWriter response_writer = response.getWriter();
+/*
+  granting (or not) access to the user
+*/    
+response_writer.close();
+</pre>
+
+  <h3 id="completeservlet">The Complete doGet Code</h3>
+  <p>Your <b>doGet</b> code should look like this:</p>
+  <pre class="prettyprint">
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
+  String username = request.getParameter("login");
+  String password = request.getParameter("pass");
+  
+  PrintWriter response_writer = response.getWriter();
+  
+  if(username.equals(password) &amp;&amp; !username.isEmpty()){
+    // successfully logged
+    response_writer.print(this.buildPage(username));
+  }else{
+    // failed to log in
+    response_writer.print(this.buildPage(""));
+  }
+  response_writer.close();
+}    
+</pre>
+  <h3 id="important">Important Note</h3>
+  <p>The ideal way of getting a message back from the server to the client, is by setting a variable (or a model) on the server side and treat it on the client side. So, never return a webpage directly from the server unless you really need it. You will learn the best way on future tutorials, don't worry.</p>
+</section>
+
+<section>
+  <h2 id="result">Result and Next Step</h2>
+  <p>When the username is different than the password, you should get the following message:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/servlet4.jpg" alt="">
+  </div>
+  <p>When the username and the password are the same (and none of them is empty), you should get this message:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/servlet5.jpg" alt="">
+  </div>
+  <p>But there's still a problem here: what happens if you paste the following URL in your browser?</p>
+  <pre class="prettyprint">
+localhost:YOUR_PORT_NUMBER/RideShare/Login?login=user&amp;pass=user
+  </pre>
+  <p>To solve this problem, try to move the code from the <b>doGet</b> method to the <b>doPost</b> method on our <b>Login</b> controller. Remember to also change the <b>method</b> attribute for the form.</p>
+</section>

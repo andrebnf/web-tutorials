@@ -1,0 +1,228 @@
+<div class="session-header color-4">
+	<div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+	
+	<header>
+		<h1>Step 1 - HTML</h1>
+		<p>Getting started</p>
+		<div class="header-control">
+			<div id="primary-download" class="round-btn" onclick="showDownloadOptions(this)"> 
+				<img src="./img/download.svg" alt="download-svg">
+			</div>
+			<!-- <div class="round-btn sub-btn">
+				<a href="#" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+					<i class="fa fa-file-code-o"></i>
+				</a>
+				<p class="tooltip">Base Code</p>
+			</div> -->
+			<div class="round-btn sub-btn">
+				<a href="./downloads/RideShare_step_1_HTML.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+					<i class="fa fa-file-zip-o"></i>
+				</a>
+				<p class="tooltip">Solved Tutorial</p>
+			</div>
+		</div>
+	</header>
+</div>
+
+<section>
+	<h3>Table of Contents</h3>
+	<div class="summary">
+		<ul>
+			<li> <a data-scroll="reading" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> HTML Quick Guide</a></li>
+			<li> <a data-scroll="begining" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Begining with NetBeans</a></li>
+			<li>
+				<ul>
+					<li><a data-scroll="creating-project" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Creating the Project</a></li>
+				</ul>
+			</li>
+			<li> <a data-scroll="editing" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Editing the HTML File</a></li>
+			<li>
+				<ul>
+					<li> <a data-scroll="preparing" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Preparing the HTML</a></li>
+					<li><a data-scroll="adding-header" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Adding the Header and a Navigation Menu</a></li>
+					<li><a data-scroll="adding-form" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Adding a Simple Form</a></li>
+					<li><a data-scroll="adding-footer" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Adding the Footer</a></li>
+				</ul>
+			</li>
+			<li><a data-scroll="complete-index" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Complete Index Page</a></li>
+			<li><a data-scroll="next" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Result & Next Step</a></li>
+		</ul>
+	</div>
+</section>
+<section>
+	<h2 id="reading">HTML Quick Guide</h2>
+	<p>It's highly reccomended that you read <a href="#/article/1/html">this article</a> before continuing. It contains all the concepts that we'll use on our project (and it will be updated constantly). This article also contains Useful Links for you to learn and understand HTML better.</p>
+</section>
+<section>
+	<h2 id="begining">Begining with NetBeans</h2>
+	<p>On these tutorials we will use NetBeans IDE version 8.0.2 to manage our application. Although it's not recommended, you can use any tool you want to test and run your application. In that case, make sure you use Apache Tomcat to simulate a server on your local machine, so when you download or exchange file with your classmates, there won't be any trouble.</p>
+	<p>The major change on NetBeans 8 from the previous versions is the use of the Java EE Web version 7. The Tomcat version used on the example is 8.0.15.0. Make sure you create your projects on these conditions.</p>
+	<h3 id="creating-project">Creating the Project</h3>
+	<p>To begin with, create a new project on NetBeans by navigating to <b>File > New Project</b> or simply by pressing <b>CTRL + SHIFT + N</b></p>
+	<div class="img-box">
+		<img src="img/tutorial-img/html1.jpg" alt="">
+	</div>
+	<p>Now, select <b>Web Application</b> under <b>Java Web</b></p>
+	<div class="img-box">
+		<img src="img/tutorial-img/html2.jpg" alt="">
+	</div>
+	<p>Click on <b>Next</b>.</p>
+	<p>Now, choose a name to your project and change the folder where it will be saved, if you will. If the option <b>Use Dedicated Folder for Storing Libraries</b> is not checked, do it. (optional)</p>
+	<div class="quote">
+		<p>Checking this option is a <b>convention</b>. It prevents the risk of opening the same project in a different machine and get a <b>missing libraries</b> error.</p>
+	</div>
+	<div class="img-box">
+		<img src="img/tutorial-img/html3.jpg" alt="">
+	</div>
+	<p>Now, select <b>Apache Tomcat</b> as our server.</p>
+	<div class="img-box">
+		<img src="img/tutorial-img/html4.jpg" alt="">
+	</div>
+
+	<p>Since we won't use any framework on this project, just click on <b>Next</b> at the following step(s) and click on <b>Finish</b> to generate your project.</p>
+</section>
+<section>
+	<h2 id="editing">Editing the HTML File</h2>
+	<p>When finish the create project wizard, NetBeans will automatically create a file called <b>index.html</b>. However, we'll use some <b>JSP</b> code later on, so let's create a <b>index.jsp</b> file. <b>Obs:</b> NetBeans 7 will create a <b>index.jsp</b> file for you.</p>
+	<p>To create our file, go to your <b>projects view</b> (usually placed on the left side of the window), expand the project container, right click the <b>Web Pages</b> folder and navigate to <b>New &gt; JSP...</b> and follow the image below:</p>
+	<div class="img-box">
+		<img src="img/tutorial-img/html5.jpg" alt="">
+	</div>
+	<p>Now, delete the old <b>index.html</b> by right clicking it and selecting the <b>Delete</b> option. Then click on <b>Yes</b> to confirm it.</p>
+	<p>The generated <b>.jsp</b> file will look like:</p>
+	<pre class="prettyprint">&lt;%-- 
+  Document   : index
+  Created_on : 31/02/2015, 0:23:18 PM
+  Author     : andrebnf
+--%&gt;
+
+&lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+    &lt;title&gt;JSP Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	<p>Here we have the base to our Ride Share Web App.</p>
+	<p>Feel free to erase the commented header (between the <b>&lt;%--</b> and <b>--%&gt;</b> tags) if you wish.</p>
+	<h3 id="preparing">Preparing the HTML</h3>
+	<p>There are some few things you'll have to change here:</p>
+	<ol>
+		<li><p>Change the text inside <b>&lt;title&gt;</b> tag so our App name would be shown at the browser's top bar.</p></li>
+		<li><p>Change the <b>&lt;meta&gt;</b> tag in order to update its syntax to the HTML 5 definition.</p></li>
+		<li><p>Erase anything inside the <b>&lt;body&gt;</b> tag so we can start defining our page's structure.</p></li>
+	</ol>
+	<p>The result is:</p>
+	<pre class="prettyprint">
+&lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Ride Share&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	
+	<h3 id="adding-header">Adding the Header and a Navigation Menu</h3>
+	<p>All done? Now let's create a header on our page so we can add an awesome navigation bar to it. All you have to do is add a <b>&lt;header&gt;</b> element inside the body and then add the elements <b>&lt;h1&gt;</b> and <b>&lt;nav&gt;</b> inside the header.</p>
+	<p>Inside the <b>&lt;nav&gt;</b>, create a simple list with the desired items.</p>
+	<p>On our case, the result will be:</p>
+	<pre class="prettyprint">
+&lt;header&gt;
+  &lt;h1&gt;&lt;a href="index.jsp"&gt;Ride Share&lt;/a&gt;&lt;/h1&gt; &lt;!-- Our title, which is also a link --&gt;
+  &lt;nav&gt;
+    &lt;ul&gt; &lt;!-- Our nav menu --&gt;
+      &lt;li&gt;&lt;a href="index.jsp"&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Sign Up&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+</pre>
+<p>There are three links on the list above. The first two will take the user to the <b>index.jsp</b> page and the third one is a null link and it will take us nowhere.</p>
+<div class="quote">
+	<p>We use the "#" charactere preceding the <b>id</b> attribute of an element so when clicked, the link will change the current scroll position of the page to that element. For example, if we have a div at the very bottom of our page with an <b>id</b> of "foo" and, at the top of the page we have a link with the value "#foo" on the <b>href</b> attribute, when this link is clicked, the page will be scrolled to the bottom of the page, positioning the "foo" element on the top of the page.</p>
+</div>
+	<h3 id="adding-form">Adding a Simple Form</h3>
+	<p>The next step is to build a simple form for login purposes. All we want are two fields (username and password) and one submit button.</p>
+	<p>We'll add the form by using the <b>&lt;form&gt;</b> HTML element. Inside this element, we'll organize the elements inside three paragraphs. The first paragraph will contain a <b>&lt;label&gt;</b> for the username field and a <b>&lt;input&gt;</b> element so the users can actually write their username. The second paragraph will be similar to the first one, but instead of reading the <b>username</b>, it'll get the user's <b>password</b>. The third paragraph will contain a button for the login action to be performed.</p>
+	<p>All these elements will be grouped on a <b>&lt;section&gt;</b> element for better organization. This section will also have a title. Check this out:</p>
+	<pre class="prettyprint">
+&lt;section&gt;
+  &lt;article&gt;
+    &lt;h1&gt;Login&lt;/h1&gt;
+    &lt;form&gt;
+      &lt;p&gt;&lt;label for="login"&gt;Username:&lt;/label&gt;&lt;input type="text" id="login"&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;label for="senha"&gt;Password:&lt;/label&gt;&lt;input type="password" id="senha"&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;input type="submit" value="Log me in"&gt;&lt;/p&gt;
+    &lt;/form&gt;
+  &lt;/article&gt;
+&lt;/section&gt;
+</pre>
+	<div class="quote">
+		<p>There are a few attributes above that are worth of an explanation. First, the "for" attribute of the <b>&lt;label&gt;</b> element refers to the its respective input field "id" attribute. By doing this, we are giving some extra meaning to our form. There are also the "type" attributes of the <b>&lt;input&gt;</b> fields. Those attributes are already defined by W3C (you cannot simply make them up). <a href="http://www.w3schools.com/tags/att_input_type.asp">Click here</a> to check the full reference for the "type" attribute of an <b>input</b> tag.</p>
+	</div>
+	<h3 id="adding-footer">Adding the Footer</h3>
+	<p>To finish the index page, all we have to do is to place a <b>&lt;footer&gt;</b> element before the <b>body</b> tag is closed. Inside the <b>&lt;footer&gt;</b>, just place some text. Here's what I did:</p>
+	<pre class="prettyprint">
+&lt;footer&gt;
+  &lt;p&gt;Web Development - UFSCar Sorocaba - 2015&lt;/p&gt;
+&lt;/footer&gt;
+</pre>
+</section>
+<section>
+	<h2 id="complete-index">The Complete Index Page</h2>
+	<p>All done! Your <b>index</b> page should look like this.</p>
+	
+	<pre class="prettyprint">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Ride Share&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;&lt;a href="index.jsp"&gt;Ride Share&lt;/a&gt;&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.jsp"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Sign up&lt;/a&gt;&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;section&gt;
+    &lt;article&gt;
+      &lt;h1&gt;Login&lt;/h1&gt;
+      &lt;form&gt;
+        &lt;p&gt;&lt;label for="login"&gt;Username:&lt;/label&gt;&lt;input type="text" id="login"&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;label for="senha"&gt;Password:&lt;/label&gt;&lt;input type="password" id="senha"&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;input type="submit" value="Log me in"&gt;&lt;/p&gt;
+      &lt;/form&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Web Development - UFSCar Sorocaba - 2015&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</section>
+<section>
+	<h2 id="next">Result & Next Step</h2>
+	<p>When you run the project, it should look like this:</p>
+	<div class="img-box">
+		<img src="img/tutorial-img/html6.jpg" alt="">
+	</div>
+	<p>Not too pretty, is it? Don't worry, we'll set some style to the page on our next Tutorial</a>.</p>
+	<a href="#/tutorial/2" class="jump-link">Setting Style to our Page <i class="fa fa-arrow-right"></i></a>
+</section>
+

@@ -1,0 +1,335 @@
+<div class="session-header color-4">
+	<div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+	<header>
+		<h1>Advanced Positioning with CSS</h1>
+		<p>by @andrebnf</p>
+		<div class="header-control">
+			
+		</div>
+	</header>
+</div>
+<section>
+  <h3>Table of Contents</h3>
+  <div class="summary">
+    <ul>
+      <li> <a data-scroll="intro" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Intro</a></li>
+      <li> <a data-scroll="elements" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Elements' Boundering Boxes</a></li>
+      <li> <a data-scroll="float" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Float Proprerty</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="clear" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Clear Property</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="position" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Position Property</a></li>
+      <li> <a data-scroll="what" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> What Shoud I Use?</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="case1" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Case 1 - Float</a></li>
+          <li><a data-scroll="case2" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Case 2 - Some Differences</a></li>
+        </ul>
+      </li>
+      <li><a data-scroll="conclusion" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Conclusion</a></li>
+      <li><a data-scroll="useful" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Useful Links</a></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+	<h2 id="intro">Intro</h2>
+	<p>A essential skill for a Front-End Web Developer or a Web Designer is <b>posining</b>.</p>
+	<p>Sometimes, you want to create a nice-looking layout and in most of the time, you'll need to know some tricks to do so.</p>
+	<p>This article presents some techniques that are often used for advanced positioning of elements on the page.</p>
+</section>
+
+<section>
+	<h2 id="elements">Elements' Boundering Boxes</h2>
+	<p>The first thing to have in mind, is that you element has some boundaries:
+		<ul>
+			<li>padding,</li>
+			<li>border,</li>
+			<li>and margin.</li>
+		</ul>
+	</p>
+	<p>These boundaries are external to the content. So when you set the <b>height</b> property on CSS, you are setting the <b>content</b>'s heignt only.</p>
+	<p>For a more practical view, check the image below:</p>
+	<div class="img-box">
+		<img src="img/article-img/css.jpg" alt="">
+	</div>
+	<p class="source">Image source: <a href="www.stackoverflow.com">Stack Overflow</a></p>
+</section>
+<section>
+	<h2 id="float">The Float Proprerty</h2>
+	<p>This property is very useful to set complext layouts positioning.</p>
+	<p>What it basically does, it pushes the floating element as far as it's possible to the right or the left. The "possible" here means the container element's limit.</p>
+	<p>The <b>float</b> property can only have two values: <b>right</b> or <b>left</b>. When you specify one of these two values to the element, you are taking this element away from the page's flow. That means, for some browsers, that it's padding is no longer valid.</p>
+	<p>When a element is floated, it's placed on the top, left or right, of the containing element and can be later custom positioned by setting some margin to it.</p>
+	<p>The fact that the float property takes the element out of the page's flow can be dangerours if not used correctly. Let's consider the image below, taken from a <a href="http://www.w3.org/TR/CSS2/visuren.html#floats">W3C's documentation</a>, which illustrates three boxes: one of them is floating to the left and the other are places within the page's flow. The bottom box is correctly placed, but its content is avoiding the floating element, giving an unexpected look to the page. That happens because the horizontal boxes don't even notice the floating element as an obstacle for positioning, since this is floating on the left. However, the horizontal boxes do know that something is floating on the left.</p>
+	<div class="img-box">
+		<img src="img/article-img/css2.gif" alt="">
+	</div>
+	<p class="source">Image source: <a href="http://www.w3.org/TR/CSS2/visuren.html#floats">W3C Visual Formatting Model</a></p>
+	
+	<h3 id="clear">The Clear Property</h3>
+	<p>To fix the second box, we can set a property called <b>clear</b> and specify, as a value, which side we want the page's flow to be cleaned. The property and it's value are:</p>
+	<pre class="prettyprint lang-css">
+#second-box {
+  clear: left; /* options are: left, right, both */
+}
+</pre>
+	<p>The result will be the following:</p>
+	<div class="img-box">
+		<img src="img/article-img/css3.png" alt="">
+	</div>
+	<p class="source">Image source: <a href="http://www.w3.org/TR/CSS2/visuren.html#floats">W3C Visual Formatting Model</a></p>
+</section>
+
+<section>	
+	<h2 id="position">The Position Property</h2>
+	<p>A good way to position elements on you page is to use the <b>position</b> property available on CSS. There are a few values to this property:</p>
+		<ul>
+			<li>static</li>
+			<li>fixed</li>
+			<li>absolute</li>
+			<li>relative</li>
+			<li>inherit</li>
+		</ul>
+	</p>
+	<p>These values above specify a reference point to the element. After this specification, we can reposition the element by using these properties: <b>left</b>, <b>right</b>, <b>bottom</b> and <b>top</b>.</p>
+  <p>The <b>static</b> value is set by default on every element and it means that the element will follow the page's flow. If this property is set, the properties <b>left</b>, <b>right</b>, <b>bottom</b> and <b>top</b> will have no effect on the element's current position.</p>
+  <p>The <b>fixed</b> value tells the element to be positioned accordingly to the browse window. We use this property when we want to set a <b>sticky navbar</b> (the navbar will always be shown don't matter wheter the users scroll or not), for example:</p>
+  <pre class="prettyprint lang-css">
+nav {
+  position: fixed;
+  width: 100%; /* Fits the page horizontally */
+  top: 0px; /* Distance from the browse window */
+}
+</pre>
+	<p>The <b>absolute</b> value means that the element will be positioned relative to the first parent which has a <b>position</b> value other than static. For this example, let's say we have a box and we want to add a button on the right of this box:</p>
+	<pre class="prettyprint lang-css">
+.box {
+  position: relative;
+  width: 50%;
+  height: 200px;
+}
+.button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 70px;
+  height: 70px;
+}
+</pre>
+	<p>The result will be: </p>
+	<div class="example">
+  	<div style="position: relative; width: 50%; border: 1px dashed blue; height: 200px">
+  		&nbsp;.box
+  		<div style="position: absolute; right: 10px; top: 10px; height: 70px; width: 70px; border: 1px dashed red;">
+  			&nbsp;.button
+  		</div>
+  	</div>
+  </div>
+
+  <p>The <b>relative</b> value sets the element to be able to be positioned accordingly to its current position. This property is often used when we have a child of this element that we want to position in a an <b>absolute</b> way.</p>
+  <p>The example below simulates the <b>margin-top</b> attribute. However, let's not forget that we are repositioning the element outside of the page. Thus, any elements placed after the repositioned one won't be aware of it's actual position.</p>
+    <pre class="prettyprint">
+&lt;html&gt;
+  &lt;head&gt;
+    ...
+    &lt;style&gt;
+      div {
+        height: 40px;
+      }
+      div.first {
+        position: relative;
+        top: 10px;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;  
+  &lt;body&gt;
+    &lt;div class="first"&gt;&lt;/div&gt;
+    &lt;div class="second"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	<p>This code will result on:</p>
+	<div class="example">
+		<div style="position:relative;width:100%;height:40px;border:1px dashed red;top:10px">
+			&nbsp;.first
+		</div>
+		<div style="width:100%;border:1px dashed blue;height: 40px;">
+			&nbsp;.second
+		</div>
+	</div>
+	<p>To conclude, the <b>inherit</b> value basically sets the element to have the same property's value as its parent do.</p>
+</section>
+
+<section>
+	<h2 id="what">What Should I Use?</h2>
+	<p>As explained here, both methods (<b>floating</b> or the <b>position property</b>) take the element out of the page's flow, so they should be used with some caution.</p>
+	<h3 id="case1">Case 1 - Float</h3>
+	<p>In regards to what is best to use, it depends on the application. Let's illustrate it here with a column grid: we want to keep three columns inside an element. For that matter, we could use <b>three floating elements</b> with <b>width</b> of 33% each. We could also use <b>three absolutely positioned</b> elements with <b>width</b> of 33% and relative left properties (the first one will have <b>left: 0px</b>, the second one, <b>left: 33%</b> and the third one, <b>left: 66%</b>. Notice that we are not considering the elements to have any border, padding or margin.</p>
+	<p>On the example above, the best choice is to use floating elements. As an argument, let's say we want to add another element after the grid. If we use the <b>clear: both</b> property on this element, everything will act as we expect and the element would be add after the grid. However, if we have three elements on the grid with the <b>position: absolute</b> property set, the following element wouldn't now where to be exactly placed, and it will sit on the top of the element.</p>
+	<p>The <b>example</b> to this case is the following:</p>
+	<pre class="prettyprint">
+&lt;html&gt;
+  &lt;head&gt;
+    ...
+    &lt;style&gt;
+      .floating-grid {
+        width: 100%;
+      }
+      .floating-grid .item {
+        height: 40px;
+        width: 33%;
+        float: left;
+      }
+      .floating-grid .another {
+        clear: both;
+        width: 100%;
+        height: 40px;
+      }
+      .absolute-grid {
+        position: relative;
+      }
+      .absolute-grid .item {
+        position: absolute;
+        width: 33%;
+        left: 0px;	
+      }
+      .absolute-grid .item:nth-child(2){
+        left: 33%;  
+      }
+      .absolute-grid .item:nth-child(3){
+        left: 66%;  
+      }
+      .absolute-grid .another{
+        width: 100%;
+        height: 40px;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;  
+  &lt;body&gt;
+    &lt;p&gt;Floating Items Grid:&lt;/p&gt;
+    &lt;div class="floating-grid"&gt;
+    	&lt;div class="item"&gt;&lt;/div&gt;
+    	&lt;div class="item"&gt;&lt;/div&gt;
+    	&lt;div class="item"&gt;&lt;/div&gt;
+    	&lt;div class="another"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p&gt;Absolute Items Grid:&lt;/p&gt;
+    &lt;div class="absolute-grid"&gt;
+    	&lt;div class="item"&gt;&lt;/div&gt;
+    	&lt;div class="item"&gt;&lt;/div&gt;
+    	&lt;div class="item"&gt;&lt;/div&gt;
+    	&lt;div class="another"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	<div class="example">
+    <p>Floating Items Grid:</p>
+		<div style="width: 100%; box-sizing: border-box">
+    	<div style="width:33%; border: 1px dashed red; height: 40px; float:left;">
+    		&nbsp;.floating-grid.item
+    	</div>
+    	<div style="width:33%; border: 1px dashed red; height: 40px; float:left;">
+    		&nbsp;.floating-grid.item
+    	</div>
+    	<div style="width:calc(33% - 1px); border: 1px dashed red; height: 40px; float:left;">
+    		&nbsp;.floating-grid.item
+    	</div>
+    	<div style="clear:both;width:100%;border:1px dashed blue;height:40px;">
+    		&nbsp;.floating-grid.another
+    	</div>
+    </div>
+    <p>Absolute Items Grid:</p>
+    <div style="width: 100%; box-sizing: border-box; position:relative;">
+    	<div style="width:33%; border: 1px dashed red; height: 40px; position:absolute; left:0px;">
+    		&nbsp;.absolute-grid.item
+    	</div>
+    	<div style="width:33%; border: 1px dashed red; height: 40px; position:absolute;left:33%;">
+    		&nbsp;.absolute-grid.item
+    	</div>
+    	<div style="width:calc(33% - 1px); border: 1px dashed red; height: 40px; position:absolute;left:66%;">
+    		&nbsp;.absolute-grid.item
+    	</div>
+    	<div style="width:100%;border:1px dashed blue;height:40px;">
+    		&nbsp;.absolute-grid.another
+    	</div>
+    </div>
+	</div>
+	<p>Something has gone wrong on the example above. And that's because the <b>absolute-grid.another</b> element is not understanding the page's flow. Here, it's better to use <b>float</b>.</p>
+
+	<h3 id="case2">Case 2 - Some Differences</h3>
+	<p>When it comes to positioning, the most dangerous and failing case it's when you set an <b>absolute</b> or a <b>fixed</b> position, which takes the elements totally off the page flow. Thus, it's recommended for designers to always use the <b>position</b> element to do simple tasks (as putting an element on the side of a <b>div</b> in order to make it look like a button). If we used the <b>float</b> option for that matter, the preceding and subsequent elements would wrap around this button, producing a potencially undesired behaviour of the layout.</p>
+	<p>Let's examplify this case: we want a <b>button</b> on the right side of a <b>box</b>. This button will be placed over the text and it will have a <b>opaque background</b>. Here's the code</p>
+	<pre class="prettyprint">
+&lt;html&gt;
+  &lt;head&gt;
+    ...
+    &lt;style&gt;
+      .box {
+        position: relative; 
+        width: 50%;  
+        height: 200px;
+      }
+      .absolute-button {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+      .floating-button {
+        margin: 10px;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;  
+  &lt;body&gt;
+    &lt;p&gt;Absolute Position on the Button:&lt;/p&gt;
+    &lt;div class="box"&gt;
+    	&lt;div class="floating-button"&gt;&lt;/div&gt;
+    	&lt;p&gt;SOME TEXT&lt;/p&gt;
+    &lt;/div&gt;	
+    &lt;p&gt;Float Position on the Button:&lt;/p&gt;
+    &lt;div class="box"&gt;
+    	&lt;div class="floating-button"&gt;&lt;/div&gt;
+    	&lt;p&gt;SOME TEXT&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	<p>The result will be: </p>
+	<div class="example">
+		<p>Absolute Position on the Button: </p>
+  	<div style="overflow: auto;position: relative; width: 50%; border: 1px dashed blue; height: 200px">
+  		&nbsp;.box
+  		<div style="position: absolute; right: 10px; top: 10px; height: 70px; width: 70px; border: 1px dashed red; background-color: white; opacity: 0.6;">
+  			&nbsp;.absolute-button
+  		</div>
+  		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla aut architecto soluta laudantium doloremque facilis omnis velit quam, assumenda deleniti, asperiores aliquam quo? Repellendus nihil itaque nobis, neque voluptatem veniam.</p>
+  	</div>
+  	<p>Float Position on the Button: </p>
+  	<div style=" overflow: auto;position: relative; width: 50%; border: 1px dashed blue; height: 200px">
+  		&nbsp;.box
+  		<div style="float: right; margin-right: 10px; margin-top:10px; height: 70px; width: 70px; border: 1px dashed red;">
+  			&nbsp;.floating-button
+  		</div>
+  		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quidem accusantium cumque. Soluta eligendi possimus voluptas dolores, porro ullam facilis atque consectetur eius iste, repellendus ex esse hic ipsum ducimus.</p>
+    </div>
+  </div>
+  <p>As you can see, the text on the second case wraps the <b>floating</b> element, while the <b>absolute</b> positioned element is placed on top of the content.</p>
+</section>
+
+<section>
+  <h2 id="conclusion">Conclusion</h2>
+  <p>Positioning is a very important step of layout design and it has a huge amount of concepts that needs specific reading. Some more advanced topics we are not going to cover are: <b>parallax scrolling</b>, <b>animations</b>, etc. However, with this positioning concepts you can have a lot of fun designing your layouts.</p>
+</section>
+
+<section>
+	<h2 id="useful">Useful Links</h2>
+	<ul class="links">
+    <li><a href="http://www.w3schools.com/css/css_positioning.asp" target="_blank">W3C</a> - CSS Positioning.</li>
+    <li><a href="http://www.smashingmagazine.com/2007/05/01/css-float-theory-things-you-should-know/" target="_blank">Smashing Magazine</a> - CSS Float Theory: Things You Should Know.</li>
+    <li><a href="http://www.w3schools.com/css/css_float.asp" target="_blank">W3C</a> - Useful articles regarding front-end development.</li>
+    <li><a href="http://tableless.com.br/o-que-html-basico/" target="_blank">Tableless - Basic HTML (Portuguese)</a> - HTML basics</li>
+  </ul>
+</section>

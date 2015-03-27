@@ -1,0 +1,247 @@
+<div class="session-header color-4">
+	<div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+	<header>
+		<h1>CSS Quick Guide</h1>
+		<p>by @andrebnf</p>
+		<div class="header-control">
+			
+		</div>
+	</header>
+</div>
+<section>
+  <h3>Table of Contents</h3>
+  <div class="summary">
+    <ul>
+      <li> <a data-scroll="intro" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Intro</a></li>
+      <li> <a data-scroll="ways" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Ways of Setting CSS to Elements on the Page</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="inline" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Inline CSS</a></li>
+          <li><a data-scroll="indoc" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> In-document CSS Block</a></li>
+          <li><a data-scroll="file" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> CSS File</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="selectors" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> CSS Selectors</a></li>
+      <li>
+        <ul>
+          <li> <a data-scroll="refering" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Refering Element Tags</a></li>
+          <li> <a data-scroll="idclass" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Using an Id or a Class to Select an element</a></li>
+          <li> <a data-scroll="attr" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Using Attributes to Select an Element</a></li>
+          <li> <a data-scroll="children" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Selecting Children</a></li>
+          <li> <a data-scroll="combining" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Combining Selectors</a></li>
+          <li> <a data-scroll="common" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Common Mistakes Regarding Selectors</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="further" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Further Studies</a></li>
+      <li><a data-scroll="usefullinks" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Useful Links</a></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+	<h2 id="intro">Intro</h2>
+	<p>We know that the base of a web page is writen in HTML, but this language by itself doesn't provide a nice-looking layout. We need something to edit color, positioning, fonts and more. This is where CSS comes in.</p>
+	<p>CSS stands for Cascading Style Sheets and basically it provide tools for editing styles on your page.</p>
+	<p>Every element (tag) is accessible through CSS. Besides that, that are pseudo elements that can also be changed using CSS. But this a subject for another article.</p>
+</section>
+
+<section>
+	<h2 id="ways">Ways of Setting CSS to Elements on the Page</h2>
+	<p>Say we have the following code and we want to change it's background color:</p>
+	<pre class="prettyprint lang-scm">
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello Web&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	<p>There are three ways of doing it and two of them use CSS Selectors to do so.</p>
+	<h3 id="inline">Inline CSS</h3>
+  <p>One way to this is by using a HTML attribute called <b>style</b> inside the <b>&lt;body&gt;</b> (which is the part of the HTML that fills the document). So if we just add the CSS property called <b>background-color</b> with the value <b>blue</b>, our background will have a blue color. Here's what we do:</p>
+  <pre class="prettyprint">
+&lt;body style="background-color: blue;"&gt;
+  &lt;h1&gt;Hello Web&lt;/h1&gt;
+&lt;/body&gt;
+</pre>
+	<p>Now the background is blue! Did you notice how the style was set? This is the CSS pattern:</p>
+	<pre class="prettyprint lang-css">
+css-property: its value;
+</pre>
+	<p>This is basic way to refer a HTML element to some style. All you have to do is look for the element and just add an attribute. But some elements can have several CSS properties and this is not a good way to organize it.</p>
+	<h3 id="indoc">In-document CSS Block</h3>
+	<pre class="prettyprint">
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Page Title&lt;/title&gt;
+	
+  &lt;style&gt;
+    body {
+      background-color: blue;
+    }
+  &lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello Web&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	<p>This is one way to organize better your styles. Instead of writing individual pieces of CSS for each element you want to stylize, you create a element called <b>&lt;style&gt;</b> inside the HTML file (usually it comes nested in the <b>&lt;head&gt;</b> element.</p>
+	<p>Well, I see a problem here. Imagine you have a header navigation menu on every page of your application. You'll have to write (or copy and paste) the code on every HTML file in order to get the navigation menu to work as you want. This makes this concept <b>not reusable</b> and it's not recommended for large applications.</p>
+	<h3 id="file">CSS File</h3>
+	<p>In order to make your CSS code more reusable and readable, you can create another file with all your styles on it.</p>
+	<p>Now, let's get our CSS code from the last example and put it on a file, which I'll call <b>styles.css</b>:</p>
+	<pre class="prettyprint lang-css">
+body {
+  background-color: blue;
+}
+</pre>
+	<p>All we have to do now is to tell the HTML file that we have some style already set and that they're on a file <b>under the same directory</b> with the name of <b>style.css</b>.</p>
+	<p>In this case, I'll have a HTML file named <b>index.html</b> with the content:</p>
+	<pre class="prettyprint lang-scm">
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Page Title&lt;/title&gt;
+	
+  &lt;link rel="stylesheet" type="text/css" href="style.css"&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello Web&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	
+	<p>That makes the organization easier when it comes to styling a big project. You can even separate the CSS files in folders. For that, keep in mind that you'll have to refer the relative path to the file on the <b>href</b> attribute starting from the HTML root path. To refer a path here just use UNIX-like syntax for path definition. So if your CSS file is one level higher on your folder structure, just add <b>../</b> before the file name on the <b>href</b> attribute and you should be fine.</p>
+	
+</section>
+
+<section>
+	<h2 id="selectors">CSS Selectors</h2>
+	<p>CSS uses the DOM tree to find objects in the document so the browser knows to what element is the CSS property refering to. There are plenty of CSS Selectors and basically you can refer any element on the document.</p>
+	
+	<h3 id="refering">Refering Element Tags</h3>
+	<p>Let's begin by selecting basic HTML element tags. To do this, on our css code, we just have open a new block begining with the tag name and followed by brackets, like the following:</p>
+	<pre class="prettyprint lang-css">
+div {
+  height: 300px;
+}
+</pre>
+	<p>On this example, we are saying that <b>every</b> <b>&lt;div&gt;</b> element will have a height of 300px;</p>
+
+	<h3 id="idclass">Using an Id or a Class to Select an element</h3>
+	<p>The most secure and organizable way to select an element via CSS, is to set some id or class values to the HTML element, as shown on the <a href="#/article/1/html">HTML Quick Guide.</a></p>
+	<p>Both <b>id</b>'s and <b>class</b>' references on CSS will be, respectively: </p>
+	<pre class="prettyprint lang-css">
+#brand-icon { /* # character for id */
+  font-size: 20px;
+}
+.text-center { /* . character for class */
+  text-align: center;
+}
+</pre>
+	<h3 id="attr">Using Attributes to Select an Element</h3>
+	<p>You can also select an element on CSS by specifying a certain attribute, or even a specific value. Here's the example:</p>
+	<p><b>HTML:</b></p>
+	<pre class="prettyprint">
+&lt;html&gt;
+  ...
+  &lt;body&gt;
+    ...
+    &lt;input type="text"&gt;
+    &lt;input type="password" name="passcode"&gt;
+    ...
+  &lt;/body&gt;
+&lt;/html&gt;		
+</pre>
+	<p><b>CSS:</b></p>
+	<pre class="prettyprint lang-css">
+input { /* Selects both input fields */
+  width: 100%;
+}    
+input[type="text"] { /* Selects only first input */
+  color: darkblue;
+}
+input[name] { /* Selects only second input, since the first one doesn't have such attribute */
+  color: purple;
+}
+</pre>
+
+  <h3 id="children">Selecting Children</h3>
+	<p>Since the CSS uses the DOM to find the elements, we can specify a chain (or a hierarchy) in order to reach the desirable element an then to style it as we wish. Let's consider the following HTML:</p>
+	<pre class="prettyprint">
+&lt;html&gt;
+  ...
+  &lt;body&gt;
+    ...
+    &lt;p&gt;Some text outside the div&lt;/p&gt;
+    &lt;div&gt;
+      &lt;p&gt;Some text inside the div&lt;/p&gt;
+    &lt;/div&gt;
+    ...
+  &lt;/body&gt;
+&lt;/html&gt;		
+</pre>
+	<p>Now, let's say we want to set a different style to both paragraphs. In order to do that, we need to select them separately:</p>
+	<pre class="prettyprint lang-css">
+p { /* Selects both paragraphs */
+  font-size: 17px;
+}    
+div p { /* Selects only the second paragraph */
+  color: darkblue;
+  font-size: 20px;
+}
+</pre>
+	<p>Notice that we are not selecting the first <b>paragraph</b> distinctly. Rather, we are setting the style to both <b>paragraphs</b> and overriding the second paragraph: since its styles were set right after both paragraphs have been set, the CSS will keep the last change made, which refers only to the second. </p>
+  <h3 id="combining">Combining Selectors</h3>
+  <p>Keep in mind that you can, at any moment, combine these selectors above. So, it's common to have something like:</p>
+  <pre class="prettyprint lang-css">
+header div #login-btn {
+  color: seagreen;
+}    
+div .container .foo p.small-text { 
+  font-size: 10px;
+}
+</pre>
+
+  <h3 id="common">Common Mistakes Regarding Selectors</h3>
+	<p>The main issue here is when you can't refer the desired element. Unfortunately, there is no secret on this matter: always keep you code organized and set ids and classes to keep you organized.</p>
+	<p>When styling a page, you also have to be concerned about the excess of organization. On big projects, if you have a class or an id for each element, it's easy to get lost.</p>
+	<p>The most trivial step you should make, is to be sure that your CSS doesn't have any <b>typo</b>, <b>misspelling</b> or <b>syntax errors</b>.</p>
+	<p>A <b>typo</b> can be considered an error on your code that still works, but no the way you wanted it to. An example of this is our last case:</p>
+	<pre class="prettyprint lang-css">
+div .container .foo p.small-text { 
+  font-size: 10px;
+}
+</pre>
+	<p>Have you noticed that there is something different of this selector? It starts with a <b>div</b>, which has a child with a class <b>container</b>. The <b>container</b> element has a child with a <b>foo</b> class, which has a <b>paragraph</b>. On this code, we are saying that the paragraph has a <b>small-text</b> class, and that's indicated by simply not separating the <b>&lt;p&gt;</b> and the <b>class name</b>. The following code is slightly different:</p>
+	<pre class="prettyprint lang-css">
+div .container .foo p .small-text { /* Space added between "p" and ".small-text" */
+  font-size: 10px;
+}
+</pre>
+	<p>Before we was setting the property <b>font-size</b> to a <b>paragraph</b> which had a <b>small-text</b> class. Now, we are setting the property to the <b>paragraph's child</b> (or children) whose class is <b>small-text</b>.</p>
+</section>
+
+<section>
+  <h2 id="further">Further Studies</h2>
+  <p>We highly recommend the students of the unit to look on the web for materials and implementations on CSS (since this language is largely used for a huge variety of layouts aproaches).</p>
+  <p>Check now the <b>Useful Links</b> section.</p>
+</section>
+
+<section>
+  <h2 id="usefullinks">Useful Links</h2>
+  <ul class="links">
+
+    <li><a href="http://learnlayout.com/" target="_blank">Learn CSS Layout</a> - A very intuitive website for CSS learning available on many languages.</li>
+    <li><a href="http://css-tricks.com/" target="_blank">CSS-Tricks</a> - One of the most complete websites on CSS's content.</li>
+    <li><a href="http://www.w3schools.com/css/css_float.asp" target="_blank">W3C</a> - Useful articles regarding front-end development.</li>
+    <li><a href="http://tableless.com.br/o-que-html-basico/" target="_blank">Tableless - Basic HTML (Portuguese)</a> - HTML basics</li>
+  </ul>
+</section>
