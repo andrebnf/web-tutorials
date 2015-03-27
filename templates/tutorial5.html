@@ -3,23 +3,23 @@
 	<header>
 		<h1>Step 5 - Ajax &amp; jQuery</h1>
 		<p>Asynchronous requests</p>
-		<!-- <div class="header-control">
+		<div class="header-control">
       <div id="primary-download" class="round-btn" onclick="showDownloadOptions(this)"> 
         <img src="./img/download.svg" alt="download-svg">
       </div>
       <div class="round-btn sub-btn">
-        <a href="./downloads/RideShare_step_4_servlet_BASE.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+        <a href="./downloads/RideShare_step_5_servlet_BASE.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
           <i class="fa fa-file-code-o"></i>
         </a>
         <p class="tooltip">Base Code</p>
       </div>
-      <div class="round-btn sub-btn">
+      <!-- <div class="round-btn sub-btn">
         <a href="./downloads/RideShare_step_4_servlet_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
           <i class="fa fa-file-zip-o"></i>
         </a>
         <p class="tooltip">Solved Tutorial</p>
-      </div>
-    </div> -->
+      </div> -->
+    </div>
 
 	</header>
 </div>
@@ -32,11 +32,27 @@
       <li>
         <ul>
           <li><a data-scroll="jqajax" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Ajax with jQuery</a></li>
-          <li><a data-scroll="how" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> How does Ajax Work</a></li>
+          <li><a data-scroll="how" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> How does Ajax Work?</a></li>
         </ul>
       </li>
-      <li> <a data-scroll="using" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Using Ajax on RideShare</a></li>
-      <li> <a data-scroll="how" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> How does Ajax Work</a></li>
+      <li> <a data-scroll="servlet" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Programming the Servlet</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="editing" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Editing the Servlet Class File</a></li>
+          <li><a data-scroll="servletfinal" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Complete doGet Code</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="client" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Programming the Client</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="statefield" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Preparing the State Field</a></li>
+          <li><a data-scroll="cityfield" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Preparing the City Field</a></li>
+          <li><a data-scroll="ajax" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Programming the Ajax Request</a></li>
+          <li><a data-scroll="requirement" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Requirements to Make an Ajax Request</a></li>
+          <li><a data-scroll="ajaxcode" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Ajax Code</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="result" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Result and Next Step</a></li>
 		</ul>
 	</div>
 </section>
@@ -49,16 +65,193 @@
   <h3 id="jqajax">Ajax with jQuery</h3>
   <p>jQuery makes it easy to implement Ajax functions, since it abstracts most of the JavaScript that does the hard work, so we will use it for this tutorial.</p>
 
-  <h3 id="how">How does Ajax Work</h3>
+  <h3 id="how">How does Ajax Work?</h3>
   <p>When an Ajax function is triggered, the servlet - which we specify on the function - is called by the browser to perform certain action. The servlet doesn't know it's an Ajax and it doesn't have to: after all, the client is just requesting something on the server-side and expecting some data back.</p>
-  <p>So, we can start programming the Ajax request, or we can start from the servlet which will respond to such request.</p>
+  <p>We can choose to start programming the Ajax request, or we can start from the servlet which will respond to such request.</p>
 </section>
 
 <section>
-  <h2 id="using">Using Ajax on RideShare</h2>
-  <p>On this tutorial, we will start by programming the servlet.</p>
-
-  <h3 id="servlet">The Servlet</h3>
+  <h2 id="servlet">Programming the Servlet</h2>
   <p>First, let's create a new servlet (like we did on our previous tutorial). This time, let's name it <b>SearchCity</b> and let's also group it under the controllers' package.</p>
   <p>Obs: don't forget to check the option <b>Add information to deployment descriptor (web.xml)</b>, exactly like we did before.</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/ajax1.jpg" alt="">
+  </div>
+  <div class="img-box">
+    <img src="img/tutorial-img/ajax2.jpg" alt="">
+  </div>
+
+
+  <h3 id="editing">Editing the Servlet Class File</h3>
+  <p>To continue with, let's delete the <b>processRequest</b> method from the inside of the <b>doGet</b> call on our <b>SearchCity.java</b> file.</p>
+  <p>Now, let's start by getting the request param <b>"state"</b> sent from the Ajax request:</p>
+  <pre class="prettyprint">
+String state = request.getParameter("state");    
+</pre>
+  <p>The <b>string</b> that will be returned to the client should contain <b>all the cities</b> regarding the chosen state. Let's create an instance of this response string now:</p>
+  <pre class="prettyprint">
+String cities = "";    
+</pre>
+  <p>Since a string with a HTML list will be returned to the client, let's set the response's charset encoding:</p>
+  <pre class="prettyprint">
+response.setCharacterEncoding("UTF-8");    
+</pre>
+  <p>On the next piece of code, we will create the list that will be returned to the client:</p>
+  <pre class="prettyprint">
+if (state.equals("SP")) {
+  cities += "&lt;option value=\"São Paulo\">São Paulo&lt;/option&gt;";
+  cities += "&lt;option value=\"São Roque\"&gt;São Roque&lt;/option&gt;";
+  cities += "&lt;option value=\"Sorocaba\"&gt;Sorocaba&lt;/option&gt;";
+} else if (state.equals("RJ")) {
+  cities += "&lt;option value=\"Angra dos reis\"&gt;Angra dos Reis&lt;/option&gt;";
+  cities += "&lt;option value=\"Parati\"&gt;Parati&lt;/option&gt;";
+  cities += "&lt;option value=\"Rio de Janeiro\"&gt;Rio de Janeiro&lt;/option&gt;";
+} else if (state.equals("SC")) {
+  cities += "&lt;option value=\"Bandeirante\"&gt;Bandeirante&lt;/option&gt;";
+  cities += "&lt;option value=\"Florianópolis\"&gt;Florianópolis&lt;/option&gt;";
+  cities += "&lt;option value=\"Princesa\"&gt;Princesa&lt;/option&gt;";
+}    
+</pre>
+  <p>Almost done! What we have to do now is to return the string <b>cities</b> to the client:</p>
+  <pre class="prettyprint">
+PrintWriter writer = response.getWriter();
+writer.print(cities);
+writer.close();
+</pre>
+
+  <h3 id="servletfinal">Complete doGet Code</h3>
+  <p>At the end of these steps, your code <b>inside</b> the <b>doGet</b> method should look like:</p>
+  <pre class="prettyprint">
+String state = request.getParameter("state");        
+String cities = "";    
+
+response.setCharacterEncoding("UTF-8"); 
+
+if (state.equals("SP")) {
+  cities += "&lt;option value=\"São Paulo\">São Paulo&lt;/option&gt;";
+  cities += "&lt;option value=\"São Roque\"&gt;São Roque&lt;/option&gt;";
+  cities += "&lt;option value=\"Sorocaba\"&gt;Sorocaba&lt;/option&gt;";
+} else if (state.equals("RJ")) {
+  cities += "&lt;option value=\"Angra dos reis\"&gt;Angra dos Reis&lt;/option&gt;";
+  cities += "&lt;option value=\"Parati\"&gt;Parati&lt;/option&gt;";
+  cities += "&lt;option value=\"Rio de Janeiro\"&gt;Rio de Janeiro&lt;/option&gt;";
+} else if (state.equals("SC")) {
+  cities += "&lt;option value=\"Bandeirante\"&gt;Bandeirante&lt;/option&gt;";
+  cities += "&lt;option value=\"Florianópolis\"&gt;Florianópolis&lt;/option&gt;";
+  cities += "&lt;option value=\"Princesa\"&gt;Princesa&lt;/option&gt;";
+}    
+
+PrintWriter writer = response.getWriter();
+writer.print(cities);
+writer.close();
+</pre>
+</section>
+
+<section>
+
+  <h2 id="client">Programming the Client</h2>
+  <p>Before continuing, we have to prepare some fields on our <b>sign up</b> form on the <b>signup.jsp</b> file.</p>
+
+  <h3 id="statefield">Preparing the State Field</h3>
+  <p>Edit the input option for the State field. It's currently just a regular text input. Change it for a <b>select</b> input:</p>
+  <pre class="prettyprint">
+&lt;select class="right" name="state" id="state"&gt;
+  &lt;option value="" selected&gt;&lt;/option&gt;
+  &lt;option value="RJ"&gt;RJ&lt;/option&gt;
+  &lt;option value="SP"&gt;SP&lt;/option&gt;
+  &lt;option value="SC"&gt;SC&lt;/option&gt;
+&lt;/select&gt;
+</pre>
+  <p>See the <b>name</b> attribute on the <b>select</b> element? That's how the servlet will get the value of this field, so make sure you have it.</p>
+
+  <h3 id="cityfield">Preparing the City Field</h3>
+  <p>Now, we will do a similar thing to the City input. Instead of set values for the user to choose, we will prepare the input to receive options from the servlet (which we've already configured). We will create an empty element and populate it later through Ajax. Change the city field to:</p>
+  <pre class="prettyprint">
+&lt;select class="right" name="city" id="city"&gt;
+
+&lt;/select&gt;
+</pre>
+  <p>For a better user experience, we will also change the position of the rows: on our current form, the <b>City</b> field comes before the <b>State</b> field. It should be the other way, so let's swap it. The final code for both City and State fields should be:</p>
+  <pre class="prettyprint">
+&lt;p class="row"&gt; &lt;!-- State field --&gt;
+    &lt;label for="state"&gt;State&lt;/label&gt;
+    &lt;select class="right" name="estado" id="estado"&gt;
+        &lt;option value="" selected&gt;&lt;/option&gt;
+        &lt;option value="RJ"&gt;RJ&lt;/option&gt;
+        &lt;option value="SP"&gt;SP&lt;/option&gt;
+        &lt;option value="SC"&gt;SC&lt;/option&gt;
+    &lt;/select&gt;
+&lt;/p&gt;
+&lt;p class="row"&gt; &lt;!-- City field --&gt;
+    &lt;label for="city"&gt;City&lt;/label&gt;
+    &lt;select class="right" name="city" id="city"&gt;
+    &lt;/select&gt;
+&lt;/p&gt;    
+</pre>
+
+  <h3 id="ajax">Programming the Ajax Request</h3>
+  <p>At one of our previous tutorials, we used some JavaScript and jQuery code to validate some fields on the sign up form. To do that, we used a jQuery event that is triggered when the DOM tree is completely loaded: <b>$(document).ready()</b>. On this step, we will add new code <b>after the validation process</b>, at the bottom of our <b>$(document).ready()</b> function.</p>
+  <p>Let's start by defining <b>when</b> the Ajax will happen. We want the cities to be loaded everytime the user <b>changes</b> the State. JavaScript got that covered: the <b>&lt;select&gt;</b> element triggers a <b>change</b> event when its value is changed.</p>
+  <p>So inside the <b>$(document).ready()</b> function, just add the code:</p>
+  <pre class="prettyprint">
+$('#state').change(function() {
+  //The above selector gets the State field by its ID
+
+  // ajax will be placed here
+});    
+</pre>
+  
+  <h3 id="requirement">Requirements to Make an Ajax Request</h3>
+  <p>Before coding the Ajax request, you should make sure you know the following items:</p>
+  <ol>
+    <li><p>the request method will be used when sending the data;</p></li>
+    <li><p>the path to the servlet that will handle the data;</p></li>
+    <li><p>the format of the outgoing data;</p></li>
+    <li><p>what data will be sent;</p></li>
+    <li><p>what to do after the response come back;</p></li>
+  </ol>
+  <p>In this case:</p>
+  <ol>
+    <li><p>we will use the HTTP's GET method (and the <b>doGet</b> method on the servlet);</p></li>
+    <li><p>since the servlet was added to the <b>web.xml</b> file when we created it, the path is simply it's name: <b>SearchCity</b>;</p></li>
+    <li><p>the servlet will return some HTML data;</p></li>
+    <li><p>the data sent is the option selected by the user from the <b>State</b> input field, whose name should be <b>state</b> as defined on the servlet;</p></li>
+    <li><p>fill the options for City selection.</p></li>
+  </ol>
+
+  <h3 id="ajaxcode">The Ajax Code</h3>
+  <p>Inside the <b>change</b> event we've set before, put the following code:</p>
+  <pre class="prettyprint">
+$.ajax({
+  type: "GET", 
+  url: "SearchCity", 
+  dataType: "html", 
+  data: { state: $('#state').val() },
+  success: function(data, textStatus, jqXHR) {
+    $('#city').html(data);
+  }
+});    
+</pre>
+  <p>Explaining each item of the code above:</p>
+  <ul>
+    <li><p><b>type:</b> it's the HTTP method used on the request;</p></li>
+    <li><p><b>url:</b> it's the path to the responsible servlet;</p></li>
+    <li><p><b>dataType:</b> it's the data type returned by the servlet;</p></li>
+    <li><p><b>data:</b> it's a list with all the parameters sent to the servlet;</p></li>
+    <li><p><b>sucess:</b> executes a function that has three parameters (data, textStatus and jqXHR). The two last of them are the status and the XmlHttpRequest respectively. For now, let's focus on the <b>data</b> param, which contains the <b>HTML</b> data (defined on <b>dataType</b>) that came from the servlet;</p></li>
+    <li><p><b>$('#city').html(data):</b> changes the content of the <b>&lt;select&gt;</b> element that displays the cities' options.</p></li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="result">Result and Next Step</h2>
+  <p>At the end, the <b>City</b> field should be showing the cities regarding the selected state.</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/ajax3.jpg" alt="">
+  </div>
+
+  <p>On our next tutorial, we will start using embeded Java code (JSP) on our <b>.jsp</b> files, what makes the response and request cicle a lot more powerful.</p>
+
+  <!-- <a href="#/tutorial/4" class="jump-link">Back-end Programming <i class="fa fa-arrow-right"></i></a> -->
+
 </section>
