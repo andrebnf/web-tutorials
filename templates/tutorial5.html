@@ -8,17 +8,17 @@
         <img src="./img/download.svg" alt="download-svg">
       </div>
       <div class="round-btn sub-btn">
-        <a href="./downloads/RideShare_step_5_servlet_BASE.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+        <a href="./downloads/RideShare_step_5_ajax_BASE.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
           <i class="fa fa-file-code-o"></i>
         </a>
         <p class="tooltip">Base Code</p>
       </div>
-      <!-- <div class="round-btn sub-btn">
-        <a href="./downloads/RideShare_step_4_servlet_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_5_ajax_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
           <i class="fa fa-file-zip-o"></i>
         </a>
         <p class="tooltip">Solved Tutorial</p>
-      </div> -->
+      </div>
     </div>
 
 	</header>
@@ -63,7 +63,7 @@
   <p>Ajax is almost an essencial tool for User Experience improvements on static interfaces. On our example App, we want to load a set of cities depending on what state the user lives in. Without having an asynchronous request, we would have to implement another form, where - after signed up - the user would choose the city.</p>
 
   <h3 id="jqajax">Ajax with jQuery</h3>
-  <p>jQuery makes it easy to implement Ajax functions, since it abstracts most of the JavaScript that does the hard work, so we will use it for this tutorial.</p>
+  <p>jQuery makes easier to implement Ajax functions, since it abstracts most of the JavaScript that does the hard work, so we will use it for this tutorial.</p>
 
   <h3 id="how">How does Ajax Work?</h3>
   <p>When an Ajax function is triggered, the servlet - which we specify on the function - is called by the browser to perform certain action. The servlet doesn't know it's an Ajax and it doesn't have to: after all, the client is just requesting something on the server-side and expecting some data back.</p>
@@ -175,7 +175,7 @@ writer.close();
   <pre class="prettyprint">
 &lt;p class="row"&gt; &lt;!-- State field --&gt;
     &lt;label for="state"&gt;State&lt;/label&gt;
-    &lt;select class="right" name="estado" id="estado"&gt;
+    &lt;select class="right" name="state" id="state"&gt;
         &lt;option value="" selected&gt;&lt;/option&gt;
         &lt;option value="RJ"&gt;RJ&lt;/option&gt;
         &lt;option value="SP"&gt;SP&lt;/option&gt;
@@ -252,6 +252,6 @@ $.ajax({
 
   <p>On our next tutorial, we will start using embeded Java code (JSP) on our <b>.jsp</b> files, what makes the response and request cicle a lot more powerful.</p>
 
-  <!-- <a href="#/tutorial/4" class="jump-link">Back-end Programming <i class="fa fa-arrow-right"></i></a> -->
+  <a href="#/tutorial/6" class="jump-link">JSP &amp; MVC <i class="fa fa-arrow-right"></i></a>
 
 </section>

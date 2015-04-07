@@ -1,0 +1,273 @@
+<div class="session-header color-4">
+	<div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+	<header>
+		<h1>Step 6 - JSP &amp; MVC</h1>
+		<p>Firsts Steps</p>
+		<div class="header-control">
+      <div id="primary-download" class="round-btn" onclick="showDownloadOptions(this)"> 
+        <img src="./img/download.svg" alt="download-svg">
+      </div>
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_6_mvc_BASE.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-code-o"></i>
+        </a>
+        <p class="tooltip">Base Code</p>
+      </div>
+      <!-- <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_4_servlet_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-zip-o"></i>
+        </a>
+        <p class="tooltip">Solved Tutorial</p>
+      </div>
+    </div> -->
+
+	</header>
+</div>
+ 
+<section>
+	<h3>Table of Contents</h3>
+	<div class="summary">
+		<ul>
+      <li> <a data-scroll="intro" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Task Overview</a></li>
+      <li> <a data-scroll="model" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Model</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="completemodel" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Complete Model Code</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="servlet" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Servlet</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="prepservlet" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Preparing the Servlet</a></li>
+          <li><a data-scroll="progservlet" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Programming the Servlet</a></li>
+          <li><a data-scroll="completeservlet" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Complete Servlet Code</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="view" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The View</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="aditionaladmin" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Additional Options for Administrator</a></li>
+          <li><a data-scroll="loginmessage" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Showing a Login Message</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="result" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Result and Next Step</a></li>
+		</ul>
+	</div>
+</section>
+
+<section>
+  <h2 id="intro">Task Overview</h2>
+  <p>In this tutorial, we will use two new concepts: JSP and MVC Architecture. <b>JSP</b> stands for Java Server Pages and it's used to get instances of models from the servlet and handle them on the view. <b>MVC</b> stands for Model-View-Controller and it's an architectural pattern (which is also the most used for web development).</p>
+  <p>In order to continue with our development, we should create three new files: a <b>controller</b> named <b>Login.java</b> - which we <b>already have</b> -, bean (or a model) called <b>User</b> and a new view which will display some login information, called <b>logged.jsp</b>.</p>
+</section>
+
+<section>
+  <h2 id="model">The Model</h2>
+  <p>Let's first create a <b>bean</b> (or <b>model</b>) on our project. To do so, right-click <b>Web Pages</b> and then navigate to <b>New > Java Class...</b>.</p>
+  <p>Call this class <b>User</b> and group it under the package <b>model</b>, like the image below:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/mvc1.jpg" alt="">
+  </div>
+  <p>Inside the created file, define two attributes: a <b>name</b> and a <b>type</b> for our user.</p>
+  <pre class="prettyprint">
+private String name;
+private String type;    
+</pre>
+  <p>After that, create <b>getters and setters</b> for our two attributes. NetBeans has a cool shortcut for that: press <b>Alt + Insert</b> and select <b>Getter and Setter...</b>. That should open a window for you to select which attributes you want to create getters and setters for. Select both attributes.</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/mvc1.jpg" alt="">
+  </div>
+  <p>Note that on the bottom of the <b>Generate Getters and Setters</b> window there's an <b>Encapsulate Fields</b> option to check. Attribute encapsulation is vital to object oriented programming and you should make sure your attributes are encapsulated. We have already set both attributes with a <b>private</b> descriptor, so <b>we don't have to check this option</b>.</p>
+  <p>To finish with the User model, let's code an empty constructor which initializes the user type with "regular", meaning that new users won't be administrators.</p>
+  <pre class="prettyprint">
+public User(){
+  type = "regular";
+}   
+</pre>
+
+  <h3 id="completemodel">Complete Model Code</h3>
+  <p>At the end, your model should be like:</p>
+  <pre class="prettyprint">
+package model;
+
+public class User {
+  private String name;
+  private String type;   
+  
+  public User(){
+    type = "regular";
+  }   
+  public String getName() {
+    return name;
+  }
+  public void setName(String name) {
+    this.name = name;
+  }
+  public String getType() {
+    return type;
+  }
+  public void setType(String type) {
+    this.type = type;
+  }
+}
+</pre>
+</section>
+<section>
+  <h2 id="servlet">The Servlet</h2>
+  <p>We should make a few adjusts before continuing with our servlet programming.</p>
+
+  <h3 id="prepservlet">Preparing the Servlet</h3>
+  <p>If you downloaded the <b>base code</b> or followed the tutorials until here, you should have a <b>Login.java</b> file that refers to our Login servlet.</p>
+  <p>At the first time we've programmed the servlet, we coded inside the <b>doGet</b> method. This is not a good aproach since the request attributes are shown at the address bar on our browsers. Moreover, we should program inside the <b>doPost</b> method.</p>
+  <p>If you have anything programmed inside the <b>doGet</b> method, change it to the default (we will no longer use it):</p>
+  <pre class="prettyprint">
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
+  processRequest(request, response);
+}    
+</pre>
+  <p>After that, make sure you delete the <b>buildPage</b> method on the servlet. We won't use this method. Let's remember that this method builds up a page which will be returned to the client. This approach <b>is not</b> recommended. That's what we are doing on this tutorial: instead of returning a page saying wheter the user is valid or not, we will return a <b>bean</b> that will be handled by the view (and that's why we will create another view).</p>
+  <p>Let's also prepare the <b>doPost</b> method of our servlet. If you had programmed inside this <b>doPost</b> before, you'll have to change a few things. Nevertheless, make sure your code looks like the following:</p>
+  <pre class="prettyprint">
+String username = request.getParameter("login");
+String password = request.getParameter("pass");
+
+if(username.equals(password) &amp;&amp; !username.isEmpty()){
+  // successfully logged
+}else{
+  // failed to log in
+}
+</pre>
+
+  <h3 id="progservlet">Programming the Servlet</h3>
+  <p>Now let's start programming the servlet. Go to the <b>doPost</b> method. There we have a condition, and the test for this condition is how the user is being validated (now we are validating the user if the login is equal to the password, just for didactic purposes). Here, let's say that if the user doesn't validate, the client will be redirected to the index page. To do that, put this code inside the <b>else</b> part of this condition:</p>
+  <pre class="prettyprint">
+response.sendRedirect("./index.jsp");
+</pre>
+  
+  <p>Now, let's consider that the user is valid. To begin with, we have to instantiate an User and set its name:</p>
+  <pre class="prettyprint">
+User new_user = new User(); // Initializes the type of the user to "regular"
+new_user.setName(username); 
+</pre>
+  <p>That should show an error. It's because the servlet doesn't know what <b>User</b> is. Go to the beginning of the <b>Login.java</b> and add this line:</p>
+  <pre class="prettyprint">
+import model.User;    
+</pre>
+  <p>Let's check if the username is "admin". In case that's true, we will set the type of the User object we created to <b>admin</b> and we will handle this change later on the view.</p>
+  <pre class="prettyprint">
+if (username.equals("admin")) {
+  new_user.setType("admin");
+}
+</pre>
+  <p>Here we created a user, but its instance is only on the server. To get the user on the client side we have to set an attribute on the request.</p>
+  <pre class="prettyprint">
+request.setAttribute("user_bean", new_user);
+</pre>
+  <p>The line above gives us the ability to get the <b>new_user</b> on the view through the <b>user_bean</b> attribute. To do that, we have to create an instance of a <b>requestDispatcher</b> and set it to forward to the view target, which is the <b>logged.jsp</b>:</p>
+  <pre class="prettyprint">
+RequestDispatcher dispatcher = null;
+dispatcher = request.getRequestDispatcher("./logged.jsp");
+dispatcher.forward(request, response);
+</pre>
+  <p>The code above will generate an error. But you already know how to solve it, don't you?</p>
+
+  <h3 id="completeservlet">Complete Servlet Code</h3>
+  <p>At the end, the <b>doPost</b> method on your servlet should look like the below:</p>
+  <pre class="prettyprint">
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+  String username = request.getParameter("login");
+  String password = request.getParameter("pass");
+
+  if(username.equals(password) &amp;&amp; !username.isEmpty()){
+    // successfully logged
+    User new_user = new User(); // Initializes the type of the user to "regular"
+    new_user.setName(username); 
+    
+    if (username.equals("admin")) {
+      new_user.setType("admin");
+    }
+    request.setAttribute("user_bean", new_user);
+    
+    RequestDispatcher dispatcher = null;
+    dispatcher = request.getRequestDispatcher("./logged.jsp");
+    dispatcher.forward(request, response);
+  } else {
+    // failed to log in
+    response.sendRedirect("./index.jsp");
+  }
+}    
+</pre>
+</section>
+
+<section>
+  <h2 id="view">The View</h2>
+  <p>To create a new page, right-click <b>Web Pages</b> on the left-hand side navigator (if you haven't repositioned it) and navigate through <b>New > JSP...</b>. Name the new file as <b>logged</b> and NetBeans will put the .jsp extension for you.</p>
+
+  <h3 id="aditionaladmin">Additional Options for Administrator</h3>
+  <p>The first thing to do here is to <b>copy</b> the code from our <b>index.jsp</b> and to <b>paste</b> it here.</p>
+  <p>Now, go to the part of the code where we built the navigational menu. Make sure your <b>&lt;nav&gt;</b> element looks like the one below:</p>
+  <pre class="prettyprint">
+&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;%
+    User current_user = (User) request.getAttribute("user_bean"); 
+    if (current_user != null) {
+      if (current_user.getType().equals("admin")) {
+    %&gt;
+    &lt;li&gt;&lt;a href="#"&gt;User Authorization&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Route Manager&lt;/a&gt;&lt;/li&gt;
+    &lt;%
+      }
+    }
+    %&gt;
+    &lt;li&gt;&lt;a href="./index.jsp"&gt;Log Out&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+  <p>On the piece of code above, we are using JSP to get an object sent from the servlet and using it on the view. For that, we have to use a <b>cast</b> on the result of the <b>getAttribute</b> call because it returns an <b>Object</b> type. Also, if the user is valid and it's an administrator, show two extra menu options.</p>
+  <p>This code will also show an error, because the <b>User</b> model is not included on the file. You can use NetBean's graphical helpers to overcome this, or just add the following line to the top of the <b>.jsp</b> file:</p>
+  <pre class="prettyprint">
+&lt;%@page import="model.User"%&gt;
+</pre>
+
+  <h3 id="loginmessage">Showing a Login Message</h3>
+  <p>Now, go to the <b>&lt;article&gt;</b> element and erase everything inside. Here we will add a login - or an error - message for the user. Your code should look like:</p>
+  <pre class="prettyprint">
+&lt;article&gt;
+  &lt;%
+    if (current_user != null) {
+  %&gt;
+    &lt;h1&gt;Logged&lt;/h1&gt;
+    &lt;h3&gt;Welcome, &lt;%= current_user.getName() %&gt;.&lt;/h3&gt;
+  &lt;%
+    } else {
+  %&gt;
+    &lt;h1&gt;Login Error&lt;/h1&gt;
+    &lt;p&gt;&lt;a href="./index.jsp"&gt;Back to Login Page&lt;/a&gt;&lt;/p&gt;
+  &lt;%
+    }
+  %&gt;
+&lt;/article&gt;
+
+</pre>
+
+  <p>And that's it for the view. You should now be able to execute your project.</p>
+
+</section>
+
+<section>
+  <h2 id="result">Result and Next Step</h2>
+  <p>To test your application, try logging in with the username <b>admin</b> and password <b>admin</b>. Try also logging in with any other user (just keep the same string both on username and on password fields). On the cases where both fields are different (when the user is not valid) the client should be redirected to the index page.</p>
+  <p>The images below illustrate how your application should behave after you've followed the previous steps.</p>
+
+  <div class="img-box">
+    <img src="img/tutorial-img/mvc3.jpg" alt="">
+  </div>
+  <div class="img-box">
+    <img src="img/tutorial-img/mvc4.jpg" alt="">
+  </div>
+</section>
