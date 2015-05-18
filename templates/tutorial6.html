@@ -13,13 +13,13 @@
         </a>
         <p class="tooltip">Base Code</p>
       </div>
-      <!-- <div class="round-btn sub-btn">
-        <a href="./downloads/RideShare_step_4_servlet_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_6_mvc_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
           <i class="fa fa-file-zip-o"></i>
         </a>
         <p class="tooltip">Solved Tutorial</p>
       </div>
-    </div> -->
+    </div>
 
 	</header>
 </div>
@@ -57,7 +57,7 @@
 
 <section>
   <h2 id="intro">Task Overview</h2>
-  <p>In this tutorial, we will use two new concepts: JSP and MVC Architecture. <b>JSP</b> stands for Java Server Pages and it's used to get instances of models from the servlet and handle them on the view. <b>MVC</b> stands for Model-View-Controller and it's an architectural pattern (which is also the most used for web development).</p>
+  <p>On this tutorial, we will use two new concepts: JSP and MVC Architecture. <b>JSP</b> stands for Java Server Pages and it's used to get instances of models from the servlet and handle them on the view. <b>MVC</b> stands for Model-View-Controller and it's an architectural pattern (which is also the most used for web development).</p>
   <p>In order to continue with our development, we should create three new files: a <b>controller</b> named <b>Login.java</b> - which we <b>already have</b> -, bean (or a model) called <b>User</b> and a new view which will display some login information, called <b>logged.jsp</b>.</p>
 </section>
 
@@ -75,7 +75,7 @@ private String type;
 </pre>
   <p>After that, create <b>getters and setters</b> for our two attributes. NetBeans has a cool shortcut for that: press <b>Alt + Insert</b> and select <b>Getter and Setter...</b>. That should open a window for you to select which attributes you want to create getters and setters for. Select both attributes.</p>
   <div class="img-box">
-    <img src="img/tutorial-img/mvc1.jpg" alt="">
+    <img src="img/tutorial-img/mvc2.jpg" alt="">
   </div>
   <p>Note that on the bottom of the <b>Generate Getters and Setters</b> window there's an <b>Encapsulate Fields</b> option to check. Attribute encapsulation is vital to object oriented programming and you should make sure your attributes are encapsulated. We have already set both attributes with a <b>private</b> descriptor, so <b>we don't have to check this option</b>.</p>
   <p>To finish with the User model, let's code an empty constructor which initializes the user type with "regular", meaning that new users won't be administrators.</p>
@@ -270,4 +270,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
   <div class="img-box">
     <img src="img/tutorial-img/mvc4.jpg" alt="">
   </div>
+
+  <a href="#/tutorial/7" class="jump-link">Database Connection <i class="fa fa-arrow-right"></i></a>
+
 </section>

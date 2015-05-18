@@ -1,0 +1,364 @@
+<div class="session-header color-4">
+	<div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+	<header>
+		<h1>Step 7 - Database Connection</h1>
+		<p>Getting Started</p>
+    <div class="header-control">
+      <div id="primary-download" class="round-btn" onclick="showDownloadOptions(this)"> 
+        <img src="./img/download.svg" alt="download-svg">
+      </div>
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_7_db_BASE.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-code-o"></i>
+        </a>
+        <p class="tooltip">Base Code</p>
+      </div>
+      <!-- <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_6_mvc_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-zip-o"></i>
+        </a>
+        <p class="tooltip">Solved Tutorial</p>
+      </div> -->
+    </div>
+	</header>
+</div>
+ 
+<section>
+	<h3>Table of Contents</h3>
+	<div class="summary">
+		<ul>
+      <li> <a data-scroll="intro" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Task Overview</a></li>
+      <li> <a data-scroll="preparing" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Preparing the Database</a></li>
+      <li> <a data-scroll="conn" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Connecting to the Database</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="adding" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Adding Connection Driver</a></li>
+          <li><a data-scroll="testing" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Testing the Connection</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="connect-project" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Connecting our Project with the Database</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="model" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Changing the Model</a></li>
+          <li><a data-scroll="managing" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Managing the Connections</a></li>
+          <li><a data-scroll="userdao" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> User Data Access Object</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="daoservlet" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Integrating a DAO with the Servlet</a></li>
+      <li> <a data-scroll="errors" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Managing Errors</a></li>
+      <li> <a data-scroll="result" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Result and Next Step</a></li>
+		</ul>
+	</div>
+</section>
+
+<section>
+  <h2 id="intro">Task Overview</h2>
+  <p>On this tutorial, we will introduce database usage on our project in order to persist data on the server. With this done, we will be able to store all the information including username, user's password and email.</p>
+  <p>The first thing we will do, is to create the database. To do so, we will use <a href="https://www.apachefriends.org/index.html" target="_blank">XAMPP</a>: an unified tool that manages Apache, MySQL, PHP and Perl connections (we won't worry about the last one).</p>
+</section>
+
+<section>
+  <h2 id="preparing">Preparing the Database</h2>
+  <p>After having XAMPP correctly installed, we will create our first table on the database. First, let's start the services <b>Apache</b> and <b>MySQL</b> - in this order.You can do that by following the steps:</p>
+  <ol>
+    <li>Navigates to XAMPP directory (usually <b>C:\xampp</b>);</li>
+    <li>Execute the file <b>xampp-control</b>;</li>
+    <li>Start <b>Apache</b> process;</li>
+    <li>Start <b>MySQL</b> process.</li>
+  </ol>
+  <p>Now, you can access <b>PHPMyAdmin</b> requesting on the browser the URL: <a href="http://localhost/phpmyadmin/" target="_blank">http://localhost/phpmyadmin/</a>. After that, you should create a database named <b>ride</b>, as the following:</p>
+
+  <div class="img-box">
+    <img src="img/tutorial-img/db1.jpg" alt="">
+  </div>
+
+  <p>Once the <b>database</b> is created, select it and navigate to the <b>SQL</b> tab on the database menu. An empty text area will be displayed, where you should type the following code to create a new table:</p>
+  <pre class="prettyprint">
+CREATE TABLE user (id int AUTO_INCREMENT PRIMARY KEY,
+username varchar (30) NOT NULL,
+email varchar (40) NOT NULL,
+senha varchar (30) NOT NULL,
+user_type varchar (20) DEFAULT 'regular',
+UNIQUE (username,email));    
+</pre>
+  <p>You can check it by double-clicking the database.</p>
+</section>
+
+<section>
+  <h2 id="conn">Connecting to the Database</h2>
+  
+  <h3 id="adding">Adding Connection Driver</h3>
+  <p>NetBeans needs to know about the database we will use. Fortunately, NetBeans natively comes with the libraries we want. To add the <b>MySQL connection driver</b> to our project, <b>right-click</b> the project, select <b>Properties</b> and navigate to <b>Libraries</b> afterwards. On the opened panel, at the right hand side, click on <b>Add Library...</b> button and select the <b>MySQL JDBC Driver</b>.</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/db2.jpg" alt="">
+  </div>
+  
+  <h3 id="testing">Testing the Connection</h3>
+  <p>In order to test the connection, create a new class called <b>DBTest</b> inside a new package called <b>lib</b>:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/db3.jpg" alt="">
+  </div>
+  <p>Inside the created file, place the following code:</p>
+  <pre class="prettyprint">
+package lib;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+
+public class DBTest {
+  //conn stores connection info from DBMS (Database Management System)
+  private Connection conn;
+  //stmt is used to send commands to the DBMS
+  private Statement stmt;
+  
+  public DBTest() {
+    try {
+      Class.forName("com.mysql.jdbc.Driver").newInstance();
+      String connection="jdbc:mysql://localhost/ride";
+      String user="root", password="";
+      conn = DriverManager.getConnection(connection, user, password);
+      stmt = conn.createStatement();
+
+      System.out.println("Cool Bananas!");
+
+      conn.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("Error: something went wrong...");
+    }
+  }
+  
+  public static void main(String args[]) {
+    DBTest t = new DBTest();
+  }
+}
+</pre>
+  <p>Now, execute the class file (not the project, but the file) by right-clicking the file and selecting the <b>Run file</b> option or by pressing <b>Shift + F6</b>. If everything work as planned, you should get a cool message. This means your connection is working.</p>
+</section>
+
+<section>
+  <h2 id="connect-project">Connecting our Project with the Database</h2>
+  <p>Here we have the challenge to abstract the connection and its use on the MVC model (which one we are using).</p>
+  <p>In order to do that, we will have to change some of our previous code and add new ones. Let's start with the <b>model</b>.</p>
+
+  <h3 id="model">Changing the Model</h3>
+  <p>We already have the <b>User</b> model on our project. All we have to do is to fill it with the other attributes that we defined on the database. They are the same because the model will represent an entity from the database. So, under the <b>model</b> package, open the file <b>User.java</b> and add the attributes <b>password</b> and <b>email</b>, both <b>strings</b>.</p>
+  <p>Just bare in mind that we are using the "old" user model on the Login servlet. Remember to edit it if needed. Also, we were assign to the user a <b>name</b> attribute. We will now changed it to <b>username</b>. Remember to refactor your code so it won't break due to undeclared variables/methods.</p>
+  <p>At the end, our User class should have the attributes:</p>
+  <pre class="prettyprint">
+private String email;
+private String type;   
+private String password;
+private String username;
+</pre>
+  <p>Also, remember to create the <b>getters</b> and <b>setters</b> for those attributes.</p>
+
+  <h3 id="managing">Managing the Connections</h3>
+  <p>To manage the connections, use the <b>Connection Factory</b> pattern. Just create a new class and call it <b>ConnectionFactory</b>. Let's group it under a new package named <b>persistence</b>:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/db4.jpg" alt="">
+  </div>
+
+  <h4>Managing Exceptions</h4>
+  <p>Everytime an error occurs on a connection, an exception is thrown. In order to manage those exceptions, create a class called <b>DAOException</b> inside the <b>persistence</b> package:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/db5.jpg" alt="">
+  </div>
+  <p>This class should inherit <b>java.lang.Exception</b>. Use <b>extends</b> to do so.</p>
+  <p>Also, we have to create some constructors. Use the NetBeans code generator to do so (<b>Alt + Ins</b> or <b>Source > Insert Code</b>). Add the following constructors:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/db6.jpg" alt="">
+  </div>
+
+  <h4>Closing Connections</h4>
+  <p>Back to <b>ConnectionFactory.java</b>, we will create methods to close the connection that was previously open. However, we have three types of connections that could be opened: <b>Connection</b>m <b>PreparedStatement</b> and <b>ResultSet</b>. Each of these types have its own class and they also implement the method close. All we have to do now, is to treat each case where the connection will be closed.</p>
+  <p>Inside the <b>ConnectionFactory</b> class, place the following methods:</p>
+  <pre class="prettyprint">
+public static void closeConnection(Connection conn, PreparedStatement ps, ResultSet rs) 
+      throws DAOException {
+  close(conn, ps, rs);
+}
+
+public static void closeConnection(Connection conn, PreparedStatement ps)
+      throws DAOException {
+  close(conn, ps, null);
+}
+
+public static void closeConnection(Connection conn)
+      throws DAOException {
+  close(conn, null, null);
+}
+
+private static void close(Connection conn, PreparedStatement ps, ResultSet rs)
+      throws DAOException {
+  try {
+    if (rs != null) rs.close();
+    if (ps != null) ps.close();
+    if (conn != null) conn.close();
+  } catch (SQLException exception) {
+    throw new DAOException(exception.getMessage(), exception.fillInStackTrace());
+  }
+}    
+</pre>
+  <p>There will be some imports missing. To add them automatically, press <b>CTRL + SHIFT + i</b>.</p>
+
+  <h4>getConnection Method</h4>
+  <p>Another method that our <b>Connection Factory</b> has to implement is the <b>getConnection</b>, which establishes a connection with our database.</p>
+  <p>We've already done that on the <b>DBTest.java</b> file. To that code, we have to add the exceptions and put it inside the <b>ConnectionFactory</b> class:</p>
+  <pre class="prettyprint">
+public static Connection getConnection() throws DAOException {
+  try {
+    Class.forName("com.mysql.jdbc.Driver").newInstance();
+    String connection="jdbc:mysql://localhost/ride";
+    String user="root", password="";
+
+    Connection conn = DriverManager.getConnection(connection, user, password);
+    return conn;
+  } catch (SQLException exception) {
+    throw new DAOException(exception.getMessage(), exception.fillInStackTrace());
+  } catch (ClassNotFoundException exception) {
+    throw new DAOException(exception.getMessage(), exception.fillInStackTrace());
+  } catch (InstantiationException exception) {
+    throw new DAOException(exception.getMessage(), exception.fillInStackTrace());
+  } catch (IllegalAccessException exception) {
+    throw new DAOException(exception.getMessage(), exception.fillInStackTrace());
+  }
+}
+</pre>
+  <p>If you made it until here, you should already be able to manipulate the database.</p>
+
+  <h3 id="userdao">User Data Access Object</h3>
+  <p>In order to keed our MVC architecture organized, we will user another pattern here, the <b>Data Access Object</b> or <b>DAO</b>.</p>
+  <p>To begin with, let's create a class called <b>UserDAO</b> and put ir under the <b>persistence</b> package:</p>
+  <div class="img-box">
+    <img src="img/tutorial-img/db7.jpg" alt="">
+  </div>
+
+  <p>The <b>UserDAO</b> class will be used whenever a User is save of load from the database. Thus, it will explicit use the <b>User</b> model. Let's import it with all the SQL dependencies:</p>
+  <pre class="prettyprint">
+import model.User;
+import java.sql.*;    
+</pre>
+  <p>To continue, add a connection attribute (instance of <b>Connection</b>) to the class:</p>
+  <pre class="prettyprint">
+private Connection connection;  
+</pre>
+  <p>After that, let's create a constructor for <b>UserDAO</b>, which will create a new connection:</p>
+  <pre class="prettyprint">
+public UserDAO() throws DAOException{
+  this.connection = ConnectionFactory.getConnection();
+}
+</pre>
+  <p>Now, we will create a <b>save</b> method which will save our user on the database. To do that, the method has to implement a SQL query that <b>inserts</b> data into the database. We can do that by using a <b>Prepared Statement</b>, included from the <b>java.sql</b> package.</p>
+  <p>Regarding the user data, our <b>save</b> method has to receive an user instance.</p>
+  <p>The <b>save</b> method will look like:</p>
+  <pre class="prettyprint">
+public void save(User u) throws SQLException {
+  PreparedStatement statement;
+  
+  String SQL = "INSERT INTO user"
+      + "(username, email, password) VALUES(' "
+            + u.getUsername() + " ', ' "
+            + u.getEmail() + " ', ' "
+            + u.getPassword() + " ' )";
+
+  statement = connection.prepareStatement(SQL);
+  statement.executeUpdate(); // executes query
+}    
+</pre>
+
+  <p>With this, we have a Data Access Object for inserting Users on our database.</p>
+</section>
+
+<section>
+  <h2 id="daoservlet">Integrating a DAO with the Servlet</h2>
+  <p>For this tutorial, we will create a servlet that handles the user data from the sign up form and saves it on the database. To do that, create a new servlet called <b>SignupUser</b> and put it under the <b>controllers</b> package. Don't forget to check the option: "add information to deployment descriptor (web.xml)".</p>
+  <p>After creating the servlet, go to the <b>doPost</b> method, erase its content, and set a new User with data from the client:</p>
+  <pre class="prettyprint">
+User u = new User();
+u.setUsername(request.getParameter("username"));
+u.setEmail(request.getParameter("email"));
+u.setPassword(request.getParameter("password"));
+u.setType("regular");
+</pre>
+  <p>Now, all we have to do is to create a new <b>UserDAO</b> and to call its constructor passing the user we just created:</p>
+  <pre class="prettyprint">
+UserDAO udao = new UserDAO();
+udao.save(u);
+</pre>
+  <p>Since we didn't treat the exceptions before, we have to do it here. Also, let's <b>forward</b> the user to the <b>logged.jsp</b> file we've created before:</p>
+  <pre class="prettyprint">
+try {
+  UserDAO udao = new UserDAO();
+  udao.save(u);
+  request.setAttribute("user_bean",u);
+  RequestDispatcher dispatcher = null;
+  dispatcher = request.getRequestDispatcher("/logged.jsp");
+  dispatcher.forward(request, response);
+
+} catch (SQLException exception) {
+  Logger.getLogger(SignupUser.class.getName()).log(Level.SEVERE, null, exception);
+} catch (DAOException exception) {
+  Logger.getLogger(SignupUser.class.getName()).log(Level.SEVERE, null, exception);
+} 
+</pre>
+
+  <p>After including this piece of code, import all the dependencies asked.</p>
+  <p>Now, go to your <b>signup.jsp</b> page and add the following attributes to your sign up form: <b>action="SignupUser" method="POST"</b>.</p>
+</section>
+
+<section>
+  <h2 id="errors">Managing Errors</h2>
+  <p>Now, we will build an error page that will be shown everytime the connection throws an exception.</p>
+  <p>To begin with, lets add a piece of code inside the <b>web.xml</b> file (located under <b>WEB-INF</b> folder).</p>
+  Then, add the following code before <b>&lt;/web-app&gt;</b>:
+  <pre class="prettyprint">
+&lt;error-page&gt;
+  &lt;exception-type&gt;java.lang.Throwable&lt;/exception-type&gt;
+  &lt;location&gt;/error.jsp&lt;/location&gt;
+&lt;/error-page&gt;
+</pre>
+  <p>The code above is simply saying: when the exception type is <b>java.lang.Throwable</b>, go to <b>error.jsp</b>.</p>
+
+  <p>Now, create a new view, the <b>error.jsp</b> with the following as content:</p>
+  <pre class="prettyprint">
+&lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Ride Share&lt;/title&gt;
+  
+  &lt;link rel="stylesheet" type="text/css" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;&lt;a href="index.jsp"&gt;Ride Share&lt;/a&gt;&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.jsp"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="./signup.jsp"&gt;Sign up&lt;/a&gt;&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;section&gt;
+    &lt;article&gt;
+      &lt;h1&gt;Oh, snap!&lt;/h1&gt;
+      &lt;h2&gt;something went terribly wrong :-(&lt;/h2&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Web Development - UFSCar Sorocaba - 2015&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;    
+</pre>
+</section>
+
+<section>
+  <h2 id="result">Result and Next Step</h2>
+  <p>By now, your project should be able to save the user's: username, password, email and type on the database when they sign up. After the sign up action, the user should be redirected to a page containing its informations.</p>
+  <p>On our next tutorial, we will continue to discover the awesomeness of database with our Java WEB Application.</p>
+</section>
