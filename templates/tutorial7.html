@@ -13,12 +13,12 @@
         </a>
         <p class="tooltip">Base Code</p>
       </div>
-      <!-- <div class="round-btn sub-btn">
-        <a href="./downloads/RideShare_step_6_mvc_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_7_db_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
           <i class="fa fa-file-zip-o"></i>
         </a>
         <p class="tooltip">Solved Tutorial</p>
-      </div> -->
+      </div>
     </div>
 	</header>
 </div>
@@ -77,7 +77,7 @@
 CREATE TABLE user (id int AUTO_INCREMENT PRIMARY KEY,
 username varchar (30) NOT NULL,
 email varchar (40) NOT NULL,
-senha varchar (30) NOT NULL,
+password varchar (30) NOT NULL,
 user_type varchar (20) DEFAULT 'regular',
 UNIQUE (username,email));    
 </pre>
@@ -265,7 +265,7 @@ public void save(User u) throws SQLException {
             + u.getPassword() + " ' )";
 
   statement = connection.prepareStatement(SQL);
-  statement.executeUpdate(); // executes query
+  statement.executeUpdate();
 }    
 </pre>
 
@@ -361,4 +361,7 @@ try {
   <h2 id="result">Result and Next Step</h2>
   <p>By now, your project should be able to save the user's: username, password, email and type on the database when they sign up. After the sign up action, the user should be redirected to a page containing its informations.</p>
   <p>On our next tutorial, we will continue to discover the awesomeness of database with our Java WEB Application.</p>
+
+  <a href="#/tutorial/8" class="jump-link">Queries (Database) <i class="fa fa-arrow-right"></i></a>
+  
 </section>

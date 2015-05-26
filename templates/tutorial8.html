@@ -1,0 +1,372 @@
+<div class="session-header color-4">
+	<div onclick="openAside()" id="menu-btn"><i id="menu-bars" class="fa fa-bars"></i></div>
+	<header>
+		<h1>Step 8 - Queries</h1>
+		<p>Single and Multiple Result Sets</p>
+    <div class="header-control">
+      <div id="primary-download" class="round-btn" onclick="showDownloadOptions(this)"> 
+        <img src="./img/download.svg" alt="download-svg">
+      </div>
+      <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_8_queries_BASE.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-code-o"></i>
+        </a>
+        <p class="tooltip">Base Code</p>
+      </div>
+      <!-- <div class="round-btn sub-btn">
+        <a href="./downloads/RideShare_step_6_mvc_SOLVED.zip" onmouseover="showDownloadTooltip(this.parentNode)" onmouseout="hideDownloadTooltip(this.parentNode)">
+          <i class="fa fa-file-zip-o"></i>
+        </a>
+        <p class="tooltip">Solved Tutorial</p>
+      </div> -->
+    </div>
+	</header>
+</div>
+ 
+<section>
+	<h3>Table of Contents</h3>
+	<div class="summary">
+		<ul>
+      <li> <a data-scroll="intro" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Task Overview</a></li>
+      <li> <a data-scroll="adding" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Changing our User's Attributes</a></li>
+      <li> <a data-scroll="singlequery" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Single-result Query</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="controller" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The Login Controller</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="multiquery" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Multi-result Query</a></li>
+      <li>
+        <ul>
+          <li><a data-scroll="preli" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Preliminar Tasks</a></li>
+          <li><a data-scroll="tud" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> The User DAO</a></li>
+          <li><a data-scroll="getusers" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Getting the Users on the Server Side</a></li>
+          <li><a data-scroll="showingre" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Showing the Result</a></li>
+        </ul>
+      </li>
+      <li> <a data-scroll="result" onclick="gotoSection(this)"><i class="fa fa-chevron-right"></i> Result and Next Step</a></li>
+		</ul>
+	</div>
+</section>
+
+<section>
+  <h2 id="intro">Task Overview</h2>
+  <p>On our last tutorial we learned how to access our database, to create new tables and to save an object on the database.</p>
+  <p>This tutorial will focus on returning objects from the database. We will use two types of queries:</p> 
+  <ul>
+    <li>
+      <p><b>Single-result queries:</b> a single object will be returned.</p>
+    </li>
+    <li>
+      <p><b>Multiple-result queries:</b> a list of objects will be returned.</p>
+    </li>
+  </ul>
+  <p>At the end of this tutorial, your application should be able to get user data on log in and to return a list of users on a search.</p>
+</section>
+
+<section>
+  <h2 id="adding">Changing our User's Attributes</h2>
+  <p>Before we start, let's add some attributes to our <b>user</b> table on the database. To do so, start the <b>Apache</b> service followed by the <b>MySQL</b> service. We are using <a href="https://www.apachefriends.org/index.html" target="_blank">XAMPP</a> for these tasks.</p>
+  <p>When the services start, go to your <a href="http://localhost/phpmyadmin/" target="_blank">PHPMyAdmin</a> control panel, select our database (<b>ride</b>) on the left-hand side menu. After selecting our database, go to the <b>SQL</b> tab and type in the following lines:</p>
+  <pre class="prettyprint">
+ALTER TABLE user ADD city varchar(30);
+ALTER TABLE user ADD gender varchar(7);
+</pre>
+  <p>Now we can store the user's <b>city</b> and <b>gender</b> on our database. But what about our <b>model</b>? Since we don't have these two attributes on it, we can't represent those columns from the database in our application.</p>
+  <p>The next step is to add the attributes <b>city</b> and <b>gender</b>, both strings, on the <b>user</b> model. You'll also have to change the <b>SignupUser</b> servlet and the <b>User DAO</b> so we can save these attributes on the database. Remember to add the HTML attribute <b>name</b> on the sign up form, so we can capture the user's input on the servlet.</p>
+  <p>If you're finding too difficult to make these changes, download the base code which contains such changes.</p>
+</section>
+
+
+<section>
+  <h2 id="singlequery">Single-result Query</h2>
+  <p>Remember that messy login servlet that we implemented before? Currently, for users to log in they just have to type the same value for both <b>username</b> and <b>password</b> fields. It has no meanings but to illustrates what the login process is. We will change it now, coming closer to reality.</p>
+  <p>To do that, we will have to get the user's data (including credentials) from the database. Let's open our user's data acess object file (<b>UserDAO.java</b>) and create a new method with the signature:</p>
+  <pre class="prettyprint">
+public User getUserByUsername(String username) throws SQLException
+</pre>
+  <p>This method will return an <b>User</b> object if it exists on the database or a <b>null</b> object otherwise.</p>
+  <p>Let's add this to the method:</p>
+  <pre class="prettyprint">
+User u;
+PreparedStatement stmt;
+ResultSet r; // will store the query's result
+String SQL = "SELECT * FROM user WHERE username = ' " + username +  " ' ";
+stmt = connection.prepareStatement(SQL);
+r = stmt.executeQuery();
+</pre>
+  <p>This code is pretty similar to the <b>save</b> method we early implemented, right? Just notice that the statement method being executed here is different, for it returns some data from the database. On the <b>save</b> method, we used <b>statement.executeUpdate()</b> and here we are using <b>statement.executeQuery()</b>.</p>
+  <p>So, when the statement executes the query, the result is stored on the <b>ResultSet</b> variable <b>r</b>. We can't say that only one result will be returned (even though we know that we will never have two users with the same username on the database).</p> 
+  <p>A <b>ResultSet</b> is an <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Iterator.html" target="_blank"><b>iterator</b></a> and its cursor is initially positioned before the first row resulted. To access that row, we have to use the <b>next()</b> method of <b>ResultSet</b>. If this method returns <b>null</b>, it means that nothing was returned; else it will return the cursor for the next data entry.</p>
+  <p>Add this code to our <b>getUserByUsername</b> method:</p>
+  <pre class="prettyprint">
+if (r.next()) {
+  u = new User();
+  u.setUsername(r.getString("username"));
+  u.setEmail(r.getString("email"));
+  u.setPassword(r.getString("password").trim());
+  u.setType(r.getString("user_type"));
+} else {
+  u = null;
+}
+</pre>
+  <div class="quote">
+    <p>Bare in mind that on a real project, the password has to be encryped.</p>
+  </div>
+  <div class="quote">
+    <p>Notice that we are using the <b>trim</b> method on the password. The <b>ResultSet</b> method <b>getString</b> gets some undesired spaces sometimes. Trim solves that problem.</p>
+  </div>
+  <p>After building the user with data from the database, return the user:</p>
+  <pre class="prettyprint">
+return u;    
+</pre>
+  <h3 id="controller">The Login Controller</h3>
+  <p>Now that our Data Access Object is ready to get user information from the database, let's edit our <b>Login</b> servlet (<b>Login.java</b>).</p>
+  <p>First, import the <b>UserDAO</b>:</p>
+  <pre class="prettyprint">
+import persistence.UserDAO;    
+</pre>
+  <p>Next, edit the <b>doPost</b> method by creating a <b>UserDAO</b> instance and executing the <b>getUserByUsername</b> method. Add this after the code that gets the user's username and password from the view:</p>
+  <pre class="prettyprint">
+UserDAO udao = new UserDAO();
+User u = udao.getUserByUsername(username); 
+</pre>
+  <p>Now, we have to check if the password typed is equal to the password stored on the database. If so, the user is logged in and the <b>logged.jsp</b> view will be displayed. Otherwise, the <b>index.jsp</b> view will be displayed.</p>
+  <p>We also have to treat the exceptions generated by our DAO and our Connection Factory.</p>
+  <p>Inside the <b>doPost</b> method, you should have something similar to:</p>
+  <pre class="prettyprint">
+try {
+  String username = request.getParameter("login");
+  String password = request.getParameter("pass");
+  
+  UserDAO udao = new UserDAO();
+  User u = udao.getUserByUsername(username);
+  
+  if (password.equals(u.getPassword())) { // user data returned and password is correct
+    request.setAttribute("user_bean", u);
+    RequestDispatcher d = null;
+    d = request.getRequestDispatcher("/logged.jsp");
+    d.forward(request, response);
+  } else { // incorrect password or username not found
+    response.sendRedirect("/index.jsp");
+  }
+} catch (SQLException exception) {
+  Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, exception);
+  throw new ServletException(exception.getMessage());
+} catch (DAOException exception) {
+  Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, exception);
+  throw new ServletException(exception.getMessage());
+}
+</pre>
+</section>
+<section>
+  <h2 id="multiquery">Multi-result Query</h2>
+
+  <h3 id="preli">Preliminar Tasks</h3>
+
+  <p>To illustrate how we could use a <b>list</b> of objects returned from the database, we will create a new <b>view</b> called <b>searchUsers.jsp</b>. After creating the file, edit it with the code:</p>
+  <pre class="prettyprint">
+&lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Ride Share&lt;/title&gt;
+  
+  &lt;link rel="stylesheet" type="text/css" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;&lt;a href="index.jsp"&gt;Ride Share&lt;/a&gt;&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.jsp"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class="active" href="searchUsers.jsp"&gt;Search Users&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="./signup.jsp"&gt;Sign up&lt;/a&gt;&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;section&gt;
+    &lt;article&gt;
+      &lt;h1&gt;Login&lt;/h1&gt;
+      &lt;form method="GET" action="GetUsers"&gt;
+        &lt;p&gt;&lt;label for="city"&gt;City:&lt;/label&gt;&lt;input type="text" id="city" name="city"&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;input type="submit" value="Submit"&gt;&lt;/p&gt;
+      &lt;/form&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Web Development - UFSCar Sorocaba - 2015&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+  <p>Now, go to the <b>index.jsp</b> file and add an entry on the menu that redirects to the <b>searchUsers.jsp</b> page. Your menu sould look like this:</p>
+  <pre class="prettyprint">
+&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a class="active" href="index.jsp"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="searchUsers.jsp"&gt;Search Users&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="./signup.jsp"&gt;Sign up&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+  <h3 id="tud">The User DAO</h3>
+
+  <p>Now, let's implement the method that returns a list of users from the database. To begin with, go to the <b>UserDAO.java</b> file and add another method:</p>
+  <pre class="prettyprint">
+public List<User> getUsersByCity(String city) throws SQLException
+</pre>
+  <p>Remember to import <b>java.util.List</b> and <b>java.util.ArrayList</b>.</p>
+  <p>The first part of this method will look very similar to our <b>getUserByUsername</b> method:</p>
+  <pre class="prettyprint">
+List&lt;User&gt; user_list = new ArrayList&lt;User&gt;();
+PreparedStatement stmt;
+ResultSet r;
+String SQL = "SELECT * FROM user WHERE city = ' " + city +  " ' ";
+stmt = connection.prepareStatement(SQL);
+
+r = stmt.executeQuery();    
+</pre>
+  <p>Now, the second part will be a bit different. Since we are expecting one or more results, let's change that <b>if</b> for a <b>while</b> loop:</p>
+  <pre class="prettyprint">
+while(r.next()){
+  User u = new User();
+  u.setUsername(r.getString("username"));
+  u.setEmail(r.getString("email"));
+  u.setPassword(r.getString("password"));
+  u.setType(r.getString("user_type"));
+  u.setCity(r.getString("city"));
+  u.setGender(r.getString("gender"));
+  users_list.add(u);
+}    
+</pre>
+  
+  <p>With that, your <b>getUsersByCity</b> method should look like the following:</p>
+  <pre class="prettyprint">
+public List getUsersByCity(String city) throws SQLException {
+  List&lt;User&gt; users_list = new ArrayList&lt;User&gt;();
+  PreparedStatement stmt;
+  ResultSet r;
+  String SQL = "SELECT * FROM user WHERE city = ' " + city +  " ' ";
+  stmt = connection.prepareStatement(SQL);
+  
+  r = stmt.executeQuery();    
+
+  while(r.next()){
+    User u = new User();
+    u.setUsername(r.getString("username"));
+    u.setEmail(r.getString("email"));
+    u.setPassword(r.getString("password"));
+    u.setType(r.getString("user_type"));
+    u.setCity(r.getString("city"));
+    u.setGender(r.getString("gender"));
+    users_list.add(u);
+  }  
+
+  return users_list;
+}
+</pre>
+
+  <h3 id="getusers">Getting the Users on the Server Side</h3>
+  <p>Inside the <b>controllers</b> package, create a new servlet called <b>GetUsers</b>. Don't forget to check the option to "add information to deployment descriptor (web.xml)".</p>
+  <p>Inside the <b>doGet</b> method of our new servlet, we will get the city provided by the user and use the method <b>getUsersByCity</b> from our <b>UserDAO</b> to get a list of users. After that, this list will be sent to another view.</p>
+  <p>This is the <b>doGet</b> method code:</p>
+  <pre class="prettyprint">
+try {
+  UserDAO udao = new UserDAO();
+  List<User> users_list;
+
+  String city = request.getParameter("city");
+  users_list = udao.getUsersByCity(city);
+  request.setAttribute("users_list", users_list);
+
+  RequestDispatcher d = null;
+  d = request.getRequestDispatcher("/searchResult.jsp");
+  d.forward(request, response);
+} catch (DAOException exception) {
+  Logger.getLogger(GetUsers.class.getName()).log(Level.SEVERE, null, exception);
+  throw new ServletException(exception.getMessage());
+} catch (SQLException exception) {
+  Logger.getLogger(GetUsers.class.getName()).log(Level.SEVERE, null, exception);
+  throw new ServletException(exception.getMessage());
+}
+</pre>
+  <h3 id="showingre">Showing the Result</h3>
+  <p>In order to show the search result, we will create another view. Name it <b>searchResult.jsp</b> and edit it with the following code:</p>
+  <pre class="prettyprint">
+&lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Ride Share&lt;/title&gt;
+  
+  &lt;link rel="stylesheet" type="text/css" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;&lt;a href="index.jsp"&gt;Ride Share&lt;/a&gt;&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.jsp"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="searchUsers.jsp"&gt;Search Users&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="./signup.jsp"&gt;Sign up&lt;/a&gt;&lt;/li&gt;
+       &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+  &lt;section&gt;
+    &lt;article&gt;
+      &lt;!-- Code for showing the results here --&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Web Development - UFSCar Sorocaba - 2015&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;    
+</pre>
+
+  <p>The first thing we will do is to show the city that the user searched for. To do that, we just need to get the <b>city</b> parameter that was early sent on a request. Do that inside the <b>&lt;article&gt;</b>:</p>
+  <pre class="prettyprint">
+&lt;h4&gt;Showing results for: &lt;%= request.getParameter("city") %&gt;&lt;/h4&gt;
+</pre>
+  <p>Now we have to get the user list that our servlet sent to this view. After that we will check if the list is empty - and in that case we will display a message on the client. If the list is not empty, we will display its result on a table.</p>
+  <p>At this point you should be familiar with the <b>jsp</b> tags. Pay attention to them.</p>
+  <p>This is the code for displaying the users:</p>
+  <pre class="prettyprint">
+&lt;%
+  List&lt;User&gt; users = (List&lt;User&gt;)request.getAttribute("users_list");
+  if(users.isEmpty()) {
+%&gt;
+  &lt;p&gt;No users were find. Please review your search terms.&lt;/p&gt;
+&lt;%
+  } else {
+%&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+      &lt;th width="180"&gt;Email&lt;/th&gt;
+      &lt;th width="200"&gt;Username&lt;/th&gt;
+      &lt;th width="100"&gt;Gender&lt;/th&gt;
+    &lt;/thead&gt;
+  &lt;%
+    for(User u : users) {
+      out.println("&lt;tr&gt;" + "&lt;td&gt;" + u.getEmail()+ "&lt;/td&gt;" + "&lt;td&gt;" 
+        + u.getUsername() + "&lt;/td&gt;" + "&lt;td&gt;" + u.getGender()+ "&lt;/td&gt;" 
+        + "&lt;tr&gt;");
+    }
+  %&gt;
+  &lt;/table&gt;
+&lt;% 
+  }
+%&gt;
+</pre>
+</section>
+
+<section>
+  <h2 id="result">Result and Next Step</h2>
+  <p>Now, users should be able to log in with their username and password which are stored on the database. Also, users can search for other users by providing the name of a particular city.</p>
+  <p>On our next tutorial, we will work with <b>sessions</b>: an important concept essencial for most applications.</p>
+
+
+</section>
